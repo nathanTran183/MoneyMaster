@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Api", "MoneyMaster.API\MoneyMaster.Api.csproj", "{4F1F06B2-E9C4-4814-8A02-BD01DD5C2EB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Database", "MoneyMaster.Database\MoneyMaster.Database.csproj", "{219BBB93-F16A-43B9-829F-E95C88B58DF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Common", "MoneyMaster.Common\MoneyMaster.Common.csproj", "{F715B3BF-472C-454C-AD3C-112A3FFA6AE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Tests", "MoneyMaster.Tests\MoneyMaster.Tests.csproj", "{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F1F06B2-E9C4-4814-8A02-BD01DD5C2EB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F1F06B2-E9C4-4814-8A02-BD01DD5C2EB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F1F06B2-E9C4-4814-8A02-BD01DD5C2EB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F1F06B2-E9C4-4814-8A02-BD01DD5C2EB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{219BBB93-F16A-43B9-829F-E95C88B58DF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{219BBB93-F16A-43B9-829F-E95C88B58DF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{219BBB93-F16A-43B9-829F-E95C88B58DF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{219BBB93-F16A-43B9-829F-E95C88B58DF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F715B3BF-472C-454C-AD3C-112A3FFA6AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F715B3BF-472C-454C-AD3C-112A3FFA6AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F715B3BF-472C-454C-AD3C-112A3FFA6AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F715B3BF-472C-454C-AD3C-112A3FFA6AE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

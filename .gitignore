@@ -1,0 +1,37 @@
+# Visual Studio & Rider settings
+.vs/
+.idea/
+
+# Build and output files
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.log
+*.cache
+*.db
+
+# User-specific files
+*.config
+*.csproj.user
+
+# NuGet packages
+*.nupkg
+packages/
+.nuget/
+
+# Logs and crash reports
+logs/
+*.log
+*.tlog
+crashdump.dmp
+
+# Node.js dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Docker-related files
+.dockerignore
+docker-compose.override.yml
