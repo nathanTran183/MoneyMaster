@@ -4,16 +4,16 @@ using MoneyMaster.Database.Entities;
 
 namespace MoneyMaster.Database.Configurations
 {
-    internal class FamilyConfiguration : IEntityTypeConfiguration<Family>
+    internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<Family> builder)
+        public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.ToTable(nameof(Family));
+            builder.ToTable(nameof(Category));
             builder.HasKey(x => x.Id);
             builder.HasOne(fm => fm.Creator)
-                .WithMany(fm => fm.Families)
+                .WithMany(fm => fm.Categories)
                 .HasForeignKey(fm => fm.CreatorId)
-                .OnDelete(DeleteBehavior.NoAction)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             builder.Property(w => w.Id)

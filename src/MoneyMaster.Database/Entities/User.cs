@@ -1,15 +1,16 @@
-﻿namespace MoneyMaster.Database.Models
+﻿namespace MoneyMaster.Database.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
         public string Username { get; set; }
         public string PasswordHash { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
 
         public virtual ICollection<FamilyMember> FamilyMembers { get; set; } = [];
+        public virtual ICollection<Family> Families { get; set; } = [];
+        public virtual ICollection<Category> Categories { get; set; } = [];
+        public virtual ICollection<SubCategory> SubCategories { get; set; } = [];
+        public virtual ICollection<Budget> Budgets { get; set; } = [];
     }
 }

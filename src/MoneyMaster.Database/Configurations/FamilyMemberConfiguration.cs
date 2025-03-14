@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MoneyMaster.Database.Models;
+using MoneyMaster.Database.Entities;
 
 namespace MoneyMaster.Database.Configurations
 {
@@ -12,7 +12,7 @@ namespace MoneyMaster.Database.Configurations
             builder.HasKey(fm => new
             {
                 fm.FamilyId,
-                fm.UserId
+                fm.MemberId
             });
 
             builder.HasOne(fm => fm.Family)
@@ -20,9 +20,9 @@ namespace MoneyMaster.Database.Configurations
                 .HasForeignKey(fm => fm.FamilyId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
-            builder.HasOne(fm => fm.User)
+            builder.HasOne(fm => fm.Member)
                 .WithMany(fm => fm.FamilyMembers)
-                .HasForeignKey(fm => fm.FamilyId)
+                .HasForeignKey(fm => fm.MemberId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
