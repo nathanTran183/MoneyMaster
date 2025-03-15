@@ -4,12 +4,12 @@ using MoneyMaster.Database.Entities;
 
 namespace MoneyMaster.Database.Configurations
 {
-    internal class SubCategoryConfiguration : IEntityTypeConfiguration<SubCategory>
+    public class SubCategoryConfiguration : BaseEntityConfiguration<SubCategory>
     {
-        public void Configure(EntityTypeBuilder<SubCategory> builder)
+        public override void Configure(EntityTypeBuilder<SubCategory> builder)
         {
+            base.Configure(builder);
             builder.ToTable(nameof(SubCategory));
-            builder.HasKey(x => x.Id);
 
             builder.HasOne(fm => fm.Category)
                 .WithMany(fm => fm.SubCategories)
@@ -22,14 +22,8 @@ namespace MoneyMaster.Database.Configurations
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
-            builder.Property(w => w.Id)
-                .ValueGeneratedOnAdd();
             builder.Property(w => w.Name)
                 .HasMaxLength(200)
-                .IsRequired();
-            builder.Property(f => f.CreatedAt)
-                .IsRequired();
-            builder.Property(f => f.UpdatedAt)
                 .IsRequired();
         }
     }

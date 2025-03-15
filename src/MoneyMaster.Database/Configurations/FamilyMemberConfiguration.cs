@@ -14,6 +14,11 @@ namespace MoneyMaster.Database.Configurations
                 fm.FamilyId,
                 fm.MemberId
             });
+            builder.HasIndex(fm => new
+            {
+                fm.FamilyId,
+                fm.MemberId
+            }).IsUnique();
 
             builder.HasOne(fm => fm.Family)
                 .WithMany(fm => fm.FamilyMembers)
