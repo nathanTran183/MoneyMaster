@@ -6,5 +6,8 @@
         public bool Enabled { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public int CreatorId { get; set; }
+
+        public virtual User Creator { get; set; }
     }
 }

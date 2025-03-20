@@ -12,5 +12,9 @@
         public virtual ICollection<Category> Categories { get; set; } = [];
         public virtual ICollection<SubCategory> SubCategories { get; set; } = [];
         public virtual ICollection<Budget> Budgets { get; set; } = [];
+        public virtual ICollection<AssetAccount> AssetAccounts { get; set; } = [];
+        public virtual ICollection<Transaction> Transactions { get; set; } = [];
+        public virtual ICollection<RecurringTransaction> RecurringTransactions { get; set; } = [];
+        public virtual ICollection<DebtLoan> DebtLoans { get; set; } = [];
     }
 }

@@ -32,6 +32,7 @@ namespace MoneyMaster.Database.Configurations
                 .IsRequired();
 
             builder.Property(w => w.Role)
+                .HasConversion<string>()
                 .HasMaxLength(100)
                 .IsRequired();
             builder.Property(f => f.JoinAt)

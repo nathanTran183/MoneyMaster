@@ -6,7 +6,7 @@ namespace MoneyMaster.Database.Configurations
 {
     internal class FamilyConfiguration : BaseEntityConfiguration<Family>
     {
-        public void Configure(EntityTypeBuilder<Family> builder)
+        public override void Configure(EntityTypeBuilder<Family> builder)
         {
             base.Configure(builder);
             builder.ToTable(nameof(Family));
@@ -16,6 +16,7 @@ namespace MoneyMaster.Database.Configurations
                 .HasForeignKey(fm => fm.CreatorId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
+
             builder.HasIndex(w => w.Name).IsUnique();
             builder.Property(w => w.Name)
                 .HasMaxLength(200)
