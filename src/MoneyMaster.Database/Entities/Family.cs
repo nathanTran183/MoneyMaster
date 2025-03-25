@@ -1,6 +1,6 @@
 ﻿namespace MoneyMaster.Database.Entities
 {
-    public class Family : BaseEntity
+    public class Family : BaseCreatorEntity
     {
         public string Name { get; set; }
 

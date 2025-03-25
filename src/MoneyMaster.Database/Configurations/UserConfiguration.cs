@@ -24,8 +24,10 @@ namespace MoneyMaster.Database.Configurations
                 .HasMaxLength(100)
                 .IsRequired();
             builder.Property(w => w.FullName)
-                .HasMaxLength(250)
+                .HasMaxLength(150)
                 .IsRequired();
+            builder.Property(w => w.Avatar)
+                .HasMaxLength(250);
         }
     }
 }

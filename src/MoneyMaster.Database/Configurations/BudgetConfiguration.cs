@@ -14,7 +14,7 @@ namespace MoneyMaster.Database.Configurations
             builder.HasOne(fm => fm.Creator)
                 .WithMany(fm => fm.Budgets)
                 .HasForeignKey(fm => fm.CreatorId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
             builder.HasOne(fm => fm.SubCategory)
                 .WithMany(fm => fm.Budgets)

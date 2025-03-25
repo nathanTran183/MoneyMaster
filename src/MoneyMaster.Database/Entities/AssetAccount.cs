@@ -2,7 +2,7 @@
 
 namespace MoneyMaster.Database.Entities
 {
-    public class AssetAccount : BaseEntity
+    public class AssetAccount : BaseCreatorEntity
     {
         public string Name { get; set; }
         public AssetType Type { get; set; }

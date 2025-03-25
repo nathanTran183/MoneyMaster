@@ -14,17 +14,16 @@ namespace MoneyMaster.Database.Configurations
             builder.HasOne(aa => aa.Creator)
                 .WithMany(aa => aa.RecurringTransactions)
                 .HasForeignKey(aa => aa.CreatorId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
             builder.HasOne(aa => aa.Family)
                 .WithMany(aa => aa.RecurringTransactions)
                 .HasForeignKey(aa => aa.FamilyId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(aa => aa.SubCategory)
                 .WithMany(aa => aa.RecurringTransactions)
                 .HasForeignKey(aa => aa.SubCategoryId)
-                .OnDelete(DeleteBehavior.Cascade)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
             builder.HasOne(aa => aa.AssetAccount)
                 .WithMany(aa => aa.RecurringTransactions)
@@ -38,9 +37,7 @@ namespace MoneyMaster.Database.Configurations
                 .HasConversion<string>()
                 .HasMaxLength(100)
                 .IsRequired();
-            builder.Property(aa => aa.Note)
-                .HasMaxLength(255)
-                .IsRequired();
+            builder.Property(aa => aa.Note);
             builder.Property(aa => aa.StartDate)
                 .IsRequired();
             builder.Property(aa => aa.Frequency)
