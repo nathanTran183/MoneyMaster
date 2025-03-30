@@ -1,4 +1,6 @@
-﻿namespace MoneyMaster.Database.Entities
+﻿using System;
+
+namespace MoneyMaster.Database.Entities
 {
     public class BaseEntity
     {

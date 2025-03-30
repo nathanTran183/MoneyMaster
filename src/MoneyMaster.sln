@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Common", "Money
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Tests", "MoneyMaster.Tests\MoneyMaster.Tests.csproj", "{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Services", "MoneyMaster.Services\MoneyMaster.Services.csproj", "{BA2447C8-97CB-48FD-8F3F-CCAA2DF6ED70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA2447C8-97CB-48FD-8F3F-CCAA2DF6ED70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA2447C8-97CB-48FD-8F3F-CCAA2DF6ED70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA2447C8-97CB-48FD-8F3F-CCAA2DF6ED70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA2447C8-97CB-48FD-8F3F-CCAA2DF6ED70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

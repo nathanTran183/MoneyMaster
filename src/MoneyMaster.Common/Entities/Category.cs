@@ -1,4 +1,6 @@
-﻿namespace MoneyMaster.Database.Entities
+﻿using System.Collections.Generic;
+
+namespace MoneyMaster.Database.Entities
 {
     public class Category : BaseCreatorEntity
     {

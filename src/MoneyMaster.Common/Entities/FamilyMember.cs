@@ -1,4 +1,5 @@
 ﻿using MoneyMaster.Common.Enums;
+using System;
 
 namespace MoneyMaster.Database.Entities
 {
@@ -10,7 +11,7 @@ namespace MoneyMaster.Database.Entities
         public DateTime JoinAt { get; set; }
         public int Status { get; set; }
 
-        public virtual required User Member { get; set; }
-        public virtual required Family Family { get; set; }
+        public virtual User Member { get; set; }
+        public virtual Family Family { get; set; }
     }
 }

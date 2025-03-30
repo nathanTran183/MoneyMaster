@@ -1,4 +1,5 @@
 ﻿using MoneyMaster.Common.Enums;
+using System.Collections.Generic;
 
 namespace MoneyMaster.Database.Entities
 {
