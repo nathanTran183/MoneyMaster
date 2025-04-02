@@ -11,16 +11,10 @@ namespace MoneyMaster.Database.Configurations
             base.Configure(builder);
             builder.ToTable(nameof(User));
 
-            builder.HasIndex(w => w.Username)
-                .IsUnique();
-            builder.Property(w => w.Username)
+            builder.Property(w => w.Email)
                 .HasMaxLength(100)
                 .IsRequired();
             builder.Property(w => w.PasswordHash)
-                .HasMaxLength(100)
-                .IsRequired();
-
-            builder.Property(w => w.Email)
                 .HasMaxLength(100)
                 .IsRequired();
             builder.Property(w => w.FullName)

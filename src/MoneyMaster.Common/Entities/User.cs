@@ -4,10 +4,9 @@ namespace MoneyMaster.Database.Entities
 {
     public class User : BaseEntity
     {
-        public string Username { get; set; }
+        public string Email { get; set; }
         public string PasswordHash { get; set; }
         public string FullName { get; set; }
-        public string Email { get; set; }
         public string? Avatar { get; set; }
 
         public virtual ICollection<FamilyMember> FamilyMembers { get; set; } = null!;
