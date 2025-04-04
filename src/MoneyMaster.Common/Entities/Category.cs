@@ -2,7 +2,7 @@
 
 namespace MoneyMaster.Database.Entities
 {
-    public class Category : BaseCreatorEntity
+    public class Category : BaseEntity
     {
         public string Name { get; set; }
         

@@ -17,6 +17,7 @@ namespace MoneyMaster.Database.Configurations
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
+            builder.HasIndex(w => w.Name).IsUnique();
             builder.Property(aa => aa.Name)
                 .HasMaxLength(200)
                 .IsRequired();

@@ -1,4 +1,4 @@
-﻿namespace MoneyMaster.Core.Interfaces;
+﻿namespace MoneyMaster.Service.Interfaces;
 
 public interface ITransactionService
 {

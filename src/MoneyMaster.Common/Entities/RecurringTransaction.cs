@@ -3,7 +3,7 @@ using System;
 
 namespace MoneyMaster.Database.Entities
 {
-    public class RecurringTransaction : BaseCreatorEntity
+    public class RecurringTransaction : BaseEntity
     {
         public float Amount { get; set; }
         public DateTime StartDate { get; set; }

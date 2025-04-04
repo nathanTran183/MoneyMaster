@@ -4,19 +4,12 @@ using MoneyMaster.Database.Entities;
 
 namespace MoneyMaster.Database.Configurations
 {
-    public class UserConfiguration : BaseEntityConfiguration<User>
+    public class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        public override void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            base.Configure(builder);
             builder.ToTable(nameof(User));
 
-            builder.Property(w => w.Email)
-                .HasMaxLength(100)
-                .IsRequired();
-            builder.Property(w => w.PasswordHash)
-                .HasMaxLength(100)
-                .IsRequired();
             builder.Property(w => w.FullName)
                 .HasMaxLength(150)
                 .IsRequired();

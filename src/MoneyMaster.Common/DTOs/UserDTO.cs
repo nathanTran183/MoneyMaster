@@ -1,4 +1,4 @@
-﻿namespace MoneyMaster.Core.DTOs;
+﻿namespace MoneyMaster.Common.DTOs;
 
 public class UserDTO
 {

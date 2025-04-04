@@ -1,6 +1,6 @@
-﻿using MoneyMaster.Core.Interfaces;
+﻿using MoneyMaster.Service.Interfaces;
 
-namespace MoneyMaster.Core.Services;
+namespace MoneyMaster.Service.Services;
 
 public class UserService : IUserService
 {

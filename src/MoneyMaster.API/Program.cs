@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using MoneyMaster.Core.Interfaces;
-using MoneyMaster.Core.Services;
 using MoneyMaster.Database;
+using MoneyMaster.Database.Entities;
 using MoneyMaster.Database.Interfaces;
 using MoneyMaster.Database.Repositories;
+using MoneyMaster.Service.Interfaces;
+using MoneyMaster.Service.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -48,6 +50,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+// Identity services
+builder.Services.AddIdentityCore<User>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+    options.Password.RequiredLength = 8;
+})
+    .AddEntityFrameworkStores<MoneyMasterContext>()
+    .AddDefaultTokenProviders();
+
 var app = builder.Build();
 
 // Apply migrations on startup
@@ -61,7 +72,9 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"An error occurred while migrating the database: {ex.Message}");
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database");
+        Environment.Exit(1);
     }
 }
 

@@ -5,7 +5,7 @@ namespace MoneyMaster.Database.Entities
 {
     public class FamilyMember
     {
-        public int MemberId { get; set; }
+        public string MemberId { get; set; }
         public int FamilyId { get; set; }
         public FamilyMemberRole Role { get; set; }
         public DateTime JoinAt { get; set; }

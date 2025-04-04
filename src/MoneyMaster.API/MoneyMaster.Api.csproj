@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MoneyMaster.Common\MoneyMaster.Common.csproj" />
-    <ProjectReference Include="..\MoneyMaster.Core\MoneyMaster.Core.csproj" />
+    <ProjectReference Include="..\MoneyMaster.Core\MoneyMaster.Service.csproj" />
     <ProjectReference Include="..\MoneyMaster.Database\MoneyMaster.Database.csproj" />
   </ItemGroup>
 

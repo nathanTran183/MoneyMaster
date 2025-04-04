@@ -2,7 +2,7 @@
 
 namespace MoneyMaster.Database.Entities
 {
-    public class DebtLoan : BaseCreatorEntity
+    public class DebtLoan : BaseEntity
     {
         public float Amount { get; set; }
         public DateTime StartDate { get; set; }

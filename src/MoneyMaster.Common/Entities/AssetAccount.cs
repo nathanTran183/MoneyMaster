@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MoneyMaster.Database.Entities
 {
-    public class AssetAccount : BaseCreatorEntity
+    public class AssetAccount : BaseEntity
     {
         public string Name { get; set; }
         public AssetType Type { get; set; }

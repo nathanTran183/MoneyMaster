@@ -26,7 +26,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{Id}")]
-    public async Task<ActionResult<User>> GetUserById(int id)
+    public async Task<ActionResult<User>> GetUserById(string id)
     {
         if (_moneyMasterContext.Users == null)
         {

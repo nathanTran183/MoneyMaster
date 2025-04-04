@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Common", "Money
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Tests", "MoneyMaster.Tests\MoneyMaster.Tests.csproj", "{67C8F6DB-6867-4E27-A70D-B8A6B3308D11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Core", "MoneyMaster.Core\MoneyMaster.Core.csproj", "{88271975-B75A-47B7-8A13-B141DE2359B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyMaster.Service", "MoneyMaster.Core\MoneyMaster.Service.csproj", "{88271975-B75A-47B7-8A13-B141DE2359B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,7 +3,7 @@ using System;
 
 namespace MoneyMaster.Common.Models.Responses;
 
-public class LoginResponse
+public class RegisterResponse
 {
     public string Token { get; set; }
     public DateTime ExpiresAt { get; set; }

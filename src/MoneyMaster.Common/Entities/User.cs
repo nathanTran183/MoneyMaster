@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace MoneyMaster.Database.Entities
 {
-    public class User : BaseEntity
+    public class User : IdentityUser
     {
-        public string Email { get; set; }
-        public string PasswordHash { get; set; }
         public string FullName { get; set; }
         public string? Avatar { get; set; }
 

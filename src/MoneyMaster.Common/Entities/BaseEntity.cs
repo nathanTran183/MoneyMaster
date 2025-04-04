@@ -8,5 +8,8 @@ namespace MoneyMaster.Database.Entities
         public bool Enabled { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string CreatorId { get; set; }
+
+        public User Creator { get; set; }
     }
 }

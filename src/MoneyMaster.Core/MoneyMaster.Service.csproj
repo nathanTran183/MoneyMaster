@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MoneyMaster.Common\MoneyMaster.Common.csproj" />
+    <ProjectReference Include="..\MoneyMaster.Database\MoneyMaster.Database.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -3,7 +3,7 @@ using System;
 
 namespace MoneyMaster.Database.Entities
 {
-    public class Transaction : BaseCreatorEntity
+    public class Transaction : BaseEntity
     {
         public float Amount { get; set; }
         public TransactionType TransactionType { get; set; }
