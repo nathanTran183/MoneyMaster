@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MoneyMaster.Common.Mappings;
 using MoneyMaster.Database;
 using MoneyMaster.Database.Entities;
 using MoneyMaster.Database.Interfaces;
@@ -20,12 +21,15 @@ builder.Services.AddDbContext<MoneyMasterContext>(options =>
 
 builder.Services.AddControllers();
 
-//builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+// Services
+builder.Services.AddTransient<IAssetAccountService, AssetAccountService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<ITransactionService, TransactionService>();
 
-//Repositories
+// Repositories
+builder.Services.AddTransient<IAssetAccountRepository, AssetAccountRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

@@ -22,7 +22,12 @@ public class AssetAccountRepository : IAssetAccountRepository
         return await _context.AssetAccounts.ToListAsync();
     }
 
-    public async Task<int> CreateAssetAccountAsync(AssetAccount assetAccount)
+    public async Task<IEnumerable<AssetAccount>> GetAssetAccountsByCreatorIdAsync(string creatorId)
+    {
+        return await _context.AssetAccounts.Where(aa => aa.CreatorId == creatorId).ToListAsync();
+    }
+
+    public async Task<int> AddAssetAccountAsync(AssetAccount assetAccount)
     {
         await _context.AssetAccounts.AddAsync(assetAccount);
         return await _context.SaveChangesAsync();
@@ -38,6 +43,7 @@ public class AssetAccountRepository : IAssetAccountRepository
 
         assetAccount.Name = account.Name;
         assetAccount.Type = account.Type;
+        _context.AssetAccounts.Update(assetAccount);
         return await _context.SaveChangesAsync() > 0;
     }
 
