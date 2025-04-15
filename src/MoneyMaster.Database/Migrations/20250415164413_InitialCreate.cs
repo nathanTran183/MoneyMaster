@@ -468,6 +468,12 @@ namespace MoneyMaster.Database.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AssetAccount_Name_CreatorId",
+                table: "AssetAccount",
+                columns: new[] { "Name", "CreatorId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Budget_CreatorId",
                 table: "Budget",
                 column: "CreatorId");
@@ -481,6 +487,12 @@ namespace MoneyMaster.Database.Migrations
                 name: "IX_Category_CreatorId",
                 table: "Category",
                 column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Category_Name_CreatorId",
+                table: "Category",
+                columns: new[] { "Name", "CreatorId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_DebtLoan_AssetAccountId",
@@ -498,9 +510,9 @@ namespace MoneyMaster.Database.Migrations
                 column: "CreatorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Family_Name",
+                name: "IX_Family_Name_CreatorId",
                 table: "Family",
-                column: "Name",
+                columns: new[] { "Name", "CreatorId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -543,6 +555,12 @@ namespace MoneyMaster.Database.Migrations
                 name: "IX_SubCategory_CreatorId",
                 table: "SubCategory",
                 column: "CreatorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubCategory_Name_CategoryId",
+                table: "SubCategory",
+                columns: new[] { "Name", "CategoryId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_AssetAccountId",

@@ -10,15 +10,15 @@ namespace MoneyMaster.Database.Configurations
         {
             base.Configure(builder);
             builder.ToTable(nameof(Category));
-            
-            builder.HasOne(fm => fm.Creator)
-                .WithMany(fm => fm.Categories)
-                .HasForeignKey(fm => fm.CreatorId)
+
+            builder.HasOne(c => c.Creator)
+                .WithMany(c => c.Categories)
+                .HasForeignKey(c => c.CreatorId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
-            builder.HasIndex(fm => fm.Name).IsUnique();
-            builder.Property(w => w.Name)
+            builder.HasIndex(c => new { c.Name, c.CreatorId }).IsUnique();
+            builder.Property(c => c.Name)
                 .HasMaxLength(200)
                 .IsRequired();
         }

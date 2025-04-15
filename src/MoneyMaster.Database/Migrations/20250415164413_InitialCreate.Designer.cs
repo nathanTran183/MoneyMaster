@@ -12,7 +12,7 @@ using MoneyMaster.Database;
 namespace MoneyMaster.Database.Migrations
 {
     [DbContext(typeof(MoneyMasterContext))]
-    [Migration("20250402160208_InitialCreate")]
+    [Migration("20250415164413_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -195,6 +195,9 @@ namespace MoneyMaster.Database.Migrations
 
                     b.HasIndex("CreatorId");
 
+                    b.HasIndex("Name", "CreatorId")
+                        .IsUnique();
+
                     b.ToTable("AssetAccount", (string)null);
                 });
 
@@ -270,6 +273,9 @@ namespace MoneyMaster.Database.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatorId");
+
+                    b.HasIndex("Name", "CreatorId")
+                        .IsUnique();
 
                     b.ToTable("Category", (string)null);
                 });
@@ -350,7 +356,7 @@ namespace MoneyMaster.Database.Migrations
 
                     b.HasIndex("CreatorId");
 
-                    b.HasIndex("Name")
+                    b.HasIndex("Name", "CreatorId")
                         .IsUnique();
 
                     b.ToTable("Family", (string)null);
@@ -485,6 +491,9 @@ namespace MoneyMaster.Database.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CreatorId");
+
+                    b.HasIndex("Name", "CategoryId")
+                        .IsUnique();
 
                     b.ToTable("SubCategory", (string)null);
                 });

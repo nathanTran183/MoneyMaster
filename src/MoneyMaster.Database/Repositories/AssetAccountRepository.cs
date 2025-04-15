@@ -30,31 +30,24 @@ public class AssetAccountRepository : IAssetAccountRepository
     public async Task<int> AddAssetAccountAsync(AssetAccount assetAccount)
     {
         await _context.AssetAccounts.AddAsync(assetAccount);
-        return await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
+        return assetAccount.Id;
     }
 
-    public async Task<bool> UpdateAssetAccountAsync(AssetAccount account)
+    public Task UpdateAssetAccountAsync(AssetAccount assetAccount)
     {
-        var assetAccount = await _context.AssetAccounts.FindAsync(account.Id);
-        if (assetAccount == null)
-        {
-            return false;
-        }
-
-        assetAccount.Name = account.Name;
-        assetAccount.Type = account.Type;
         _context.AssetAccounts.Update(assetAccount);
-        return await _context.SaveChangesAsync() > 0;
+        return _context.SaveChangesAsync();
     }
 
-    public async Task<bool> DeleteAssetAccountAsync(int id)
+    public Task DeleteAssetAccountAsync(AssetAccount assetAccount)
     {
-        var assetAccount = await _context.AssetAccounts.FindAsync(id);
-        if (assetAccount == null)
-        {
-            return false;
-        }
         _context.AssetAccounts.Remove(assetAccount);
-        return await _context.SaveChangesAsync() > 0;
+        return _context.SaveChangesAsync();
+    }
+
+    public async Task<bool> AssetAccountNameExistByCreatorId(int id, string creatorId, string name)
+    {
+        return await _context.AssetAccounts.AnyAsync(a => a.Id != id && a.Name == name && a.CreatorId == creatorId);
     }
 }

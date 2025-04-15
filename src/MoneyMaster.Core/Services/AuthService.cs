@@ -16,11 +16,12 @@ namespace MoneyMaster.Service.Services
 
         public async Task<LoginResponse> LoginAsync(LoginRequest loginRequest)
         {
-            var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
-            if (user == null)
-            {
-                throw new UnauthorizedException("Invalid credentials");
-            }
+            //var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
+            //if (user == null)
+            //{
+            //    throw new UnauthorizedException("Invalid credentials");
+            //}
+            throw new NotImplementedException();
         }
 
         public Task<RegisterResponse> LoginAsync(RegisterRequest loginRequest)

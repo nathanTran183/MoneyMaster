@@ -11,22 +11,22 @@ namespace MoneyMaster.Database.Configurations
             base.Configure(builder);
             builder.ToTable(nameof(DebtLoan));
 
-            builder.HasOne(aa => aa.Creator)
-                .WithMany(aa => aa.DebtLoans)
-                .HasForeignKey(aa => aa.CreatorId)
+            builder.HasOne(dl => dl.Creator)
+                .WithMany(c => c.DebtLoans)
+                .HasForeignKey(dl => dl.CreatorId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-            builder.HasOne(aa => aa.AssetAccount)
+            builder.HasOne(dl => dl.AssetAccount)
                 .WithMany(aa => aa.DebtLoans)
-                .HasForeignKey(aa => aa.AssetAccountId)
+                .HasForeignKey(dl => dl.AssetAccountId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
-            builder.Property(aa => aa.Amount)
+            builder.Property(dl => dl.Amount)
                 .IsRequired();
-            builder.Property(aa => aa.StartDate)
+            builder.Property(dl => dl.StartDate)
                 .IsRequired();
-            builder.Property(aa => aa.EndDate)
+            builder.Property(dl => dl.EndDate)
                 .IsRequired();
         }
     }

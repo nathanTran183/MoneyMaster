@@ -11,18 +11,19 @@ namespace MoneyMaster.Database.Configurations
             base.Configure(builder);
             builder.ToTable(nameof(SubCategory));
 
-            builder.HasOne(fm => fm.Category)
-                .WithMany(fm => fm.SubCategories)
-                .HasForeignKey(fm => fm.CategoryId)
+            builder.HasOne(sc => sc.Category)
+                .WithMany(c => c.SubCategories)
+                .HasForeignKey(sc => sc.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
-            builder.HasOne(fm => fm.Creator)
-                .WithMany(fm => fm.SubCategories)
-                .HasForeignKey(fm => fm.CreatorId)
+            builder.HasOne(sc => sc.Creator)
+                .WithMany(u => u.SubCategories)
+                .HasForeignKey(sc => sc.CreatorId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
-            builder.Property(w => w.Name)
+            builder.HasIndex(sc => new { sc.Name, sc.CategoryId }).IsUnique();
+            builder.Property(sc => sc.Name)
                 .HasMaxLength(200)
                 .IsRequired();
         }
