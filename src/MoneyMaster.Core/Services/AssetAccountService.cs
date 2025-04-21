@@ -8,87 +8,101 @@ namespace MoneyMaster.Service.Services
 {
     public class AssetAccountService : IAssetAccountService
     {
-        private readonly IAssetAccountRepository _assetAccountRepository;
-        private readonly IMapper _mapper;
+        private readonly IAssetAccountRepository assetAccountRepository;
+        private readonly IUserRepository userRepository;
+        private readonly IMapper mapper;
 
-        public AssetAccountService(IAssetAccountRepository assetAccountRepository, IMapper mapper)
+        public AssetAccountService(IAssetAccountRepository assetAccountRepository, IUserRepository userRepository, IMapper mapper)
         {
-            _assetAccountRepository = assetAccountRepository;
-            _mapper = mapper;
+            this.assetAccountRepository = assetAccountRepository;
+            this.userRepository = userRepository;
+            this.mapper = mapper;
         }
 
-        public async Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccounts()
+        public async Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccountsAsync()
         {
-            var assetAccounts = await _assetAccountRepository.GetAssetAccountsAsync();
+            var assetAccounts = await assetAccountRepository.GetAssetAccountsAsync();
             var result = new ServiceResult<IEnumerable<AssetAccountDTO>>();
-            result.Value = _mapper.Map<IEnumerable<AssetAccountDTO>>(assetAccounts);
+            result.Value = mapper.Map<IEnumerable<AssetAccountDTO>>(assetAccounts);
             return result;
         }
 
-        public async Task<ServiceResult<AssetAccountDTO>> GetAssetAccountById(int id)
+        public async Task<ServiceResult<AssetAccountDTO>> GetAssetAccountByIdAsync(int id)
         {
-            var assetAccount = await _assetAccountRepository.GetAssetAccountByIdAsync(id);
+            var assetAccount = await assetAccountRepository.GetAssetAccountByIdAsync(id);
             if (assetAccount == null)
             {
                 throw new InvalidDataException($"Asset Account with Id = {id} is not found.");
             }
             var result = new ServiceResult<AssetAccountDTO>();
-            result.Value = _mapper.Map<AssetAccountDTO>(assetAccount);
+            result.Value = mapper.Map<AssetAccountDTO>(assetAccount);
             return result;
         }
 
-        public async Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccountsByCreatorId(string creatorId)
+        public async Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccountsByCreatorIdAsync(string creatorId)
         {
             var result = new ServiceResult<IEnumerable<AssetAccountDTO>>();
-            var assetAccounts = await _assetAccountRepository.GetAssetAccountsByCreatorIdAsync(creatorId);
-            result.Value = _mapper.Map<IEnumerable<AssetAccountDTO>>(assetAccounts);
+            var creator = await userRepository.GetUserByIdAsync(creatorId);
+            if (creator == null)
+            {
+                result.AddErrors($"User Id = {creatorId} is not existed.");
+                return result;
+            }
+            var assetAccounts = await assetAccountRepository.GetAssetAccountsByCreatorIdAsync(creatorId);
+            result.Value = mapper.Map<IEnumerable<AssetAccountDTO>>(assetAccounts);
             return result;
         }
 
-        public async Task<ServiceResult<int>> CreateAssetAccount(AssetAccountDTO assetAccountDTO, string userId)
+        public async Task<ServiceResult<int>> AddAssetAccountAsync(AssetAccountDTO assetAccountDTO)
         {
-            var isNameUnique = await _assetAccountRepository.AssetAccountNameExistByCreatorId(assetAccountDTO.Id, userId, assetAccountDTO.Name);
+            var result = new ServiceResult<int>();
+            var isNameUnique = await assetAccountRepository.AssetAccountNameExistByCreatorId(assetAccountDTO.Id, assetAccountDTO.CreatorId, assetAccountDTO.Name);
             if (isNameUnique)
             {
-                throw new InvalidDataException($"The Asset Account named {assetAccountDTO.Name} is existed.");
+                result.AddErrors($"The Asset Account named {assetAccountDTO.Name} is existed.");
+                return result;
             }
 
-            var assetAccount = _mapper.Map<AssetAccount>(assetAccountDTO);
-            var result = new ServiceResult<int>();
-            result.Value = await _assetAccountRepository.AddAssetAccountAsync(assetAccount);
+            var assetAccount = mapper.Map<AssetAccount>(assetAccountDTO);
+            result.Value = await assetAccountRepository.AddAssetAccountAsync(assetAccount);
             return result;
         }
 
-        public async Task<ServiceResult> UpdateAssetAccount(AssetAccountDTO assetAccountDTO, string userId)
+        public async Task<ServiceResult> UpdateAssetAccountAsync(AssetAccountDTO assetAccountDTO)
         {
-            var assetAcc = await _assetAccountRepository.GetAssetAccountByIdAsync(assetAccountDTO.Id);
+            var result = new ServiceResult() { Success = true };
+
+            var assetAcc = await assetAccountRepository.GetAssetAccountByIdAsync(assetAccountDTO.Id);
             if (assetAcc == null)
             {
-                throw new InvalidOperationException($"The Asset Account named {assetAccountDTO.Name} is not existed.");
+                result.AddErrors($"The Asset Account named {assetAccountDTO.Name} is not existed.");
+                return result;
             }
 
-            var isNameUnique = await _assetAccountRepository.AssetAccountNameExistByCreatorId(assetAccountDTO.Id, userId, assetAccountDTO.Name);
+            var isNameUnique = await assetAccountRepository.AssetAccountNameExistByCreatorId(assetAccountDTO.Id, assetAccountDTO.CreatorId, assetAccountDTO.Name);
             if (isNameUnique)
             {
-                throw new InvalidDataException($"The Asset Account named {assetAccountDTO.Name} is existed.");
+                result.AddErrors($"The Asset Account named {assetAccountDTO.Name} is existed.");
+                return result;
             }
 
-            var assetAccount = _mapper.Map<AssetAccount>(assetAccountDTO);
-            await _assetAccountRepository.UpdateAssetAccountAsync(assetAccount);
-            var result = new ServiceResult() { Success = true };
+            var assetAccount = mapper.Map<AssetAccount>(assetAccountDTO);
+            await assetAccountRepository.UpdateAssetAccountAsync(assetAccount);
             return result;
         }
 
-        public async Task<ServiceResult> DeleteAssetAccount(int id)
+        public async Task<ServiceResult> DeleteAssetAccountAsync(int id)
         {
-            var assetAccount = await _assetAccountRepository.GetAssetAccountByIdAsync(id);
+            var result = new ServiceResult() { Success = true };
+            var assetAccount = await assetAccountRepository.GetAssetAccountByIdAsync(id);
             if (assetAccount == null)
             {
-                throw new InvalidOperationException($"The Asset Account with Id = {id} is not found.");
+                result.AddErrors($"The Asset Account with Id = {id} is not found.");
             }
-
-            await _assetAccountRepository.DeleteAssetAccountAsync(assetAccount);
-            var result = new ServiceResult() { Success = true };
+            else
+            {
+                await assetAccountRepository.DeleteAssetAccountAsync(assetAccount);
+            }
             return result;
         }
     }

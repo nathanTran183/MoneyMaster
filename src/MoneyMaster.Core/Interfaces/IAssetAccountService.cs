@@ -4,11 +4,11 @@ namespace MoneyMaster.Service.Interfaces
 {
     public interface IAssetAccountService
     {
-        public Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccounts();
-        public Task<ServiceResult<AssetAccountDTO>> GetAssetAccountById(int id);
-        public Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccountsByCreatorId(string creatorId);
-        public Task<ServiceResult<int>> CreateAssetAccount(AssetAccountDTO assetAccountDTO, string userId);
-        public Task<ServiceResult> UpdateAssetAccount(AssetAccountDTO assetAccountDTO, string userId);
-        public Task<ServiceResult> DeleteAssetAccount(int id);
+        public Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccountsAsync();
+        public Task<ServiceResult<AssetAccountDTO>> GetAssetAccountByIdAsync(int id);
+        public Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccountsByCreatorIdAsync(string creatorId);
+        public Task<ServiceResult<int>> AddAssetAccountAsync(AssetAccountDTO assetAccountDTO);
+        public Task<ServiceResult> UpdateAssetAccountAsync(AssetAccountDTO assetAccountDTO);
+        public Task<ServiceResult> DeleteAssetAccountAsync(int id);
     }
 }

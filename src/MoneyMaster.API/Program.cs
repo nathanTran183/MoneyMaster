@@ -19,7 +19,7 @@ var connectionString = builder.Configuration.GetConnectionString("MoneyMasterCon
 builder.Services.AddDbContext<MoneyMasterContext>(options =>
     options.UseSqlServer(connectionString, option => option.EnableRetryOnFailure(10, TimeSpan.FromSeconds(30), null)));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 

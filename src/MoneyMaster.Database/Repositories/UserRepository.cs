@@ -16,6 +16,11 @@ namespace MoneyMaster.Database.Repositories
             return _context.Users.SingleOrDefaultAsync(u => u.Email == email);
         }
 
+        public Task<User?> GetUserByIdAsync(string id)
+        {
+            return _context.Users.SingleOrDefaultAsync(u => u.Id == id);
+        }
+
         public Task SaveUser(User user)
         {
             throw new NotImplementedException();
