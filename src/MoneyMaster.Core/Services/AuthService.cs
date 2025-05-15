@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
+using MoneyMaster.Common.Interfaces;
 using MoneyMaster.Common.Models.Responses;
 using MoneyMaster.Database.Interfaces;
 using MoneyMaster.Service.Interfaces;
@@ -7,11 +8,13 @@ namespace MoneyMaster.Service.Services
 {
     public class AuthService : IAuthService
     {
-        private IUserRepository _userRepository;
+        private IUserRepository userRepository;
+        private readonly IPasswordHasher passwordHasher;
 
-        public AuthService(IUserRepository userRepository)
+        public AuthService(IUserRepository userRepository, IPasswordHasher passwordHasher)
         {
-            _userRepository = userRepository;
+            this.userRepository = userRepository;
+            this.passwordHasher = passwordHasher;
         }
 
         public async Task<LoginResponse> LoginAsync(LoginRequest loginRequest)
@@ -24,9 +27,15 @@ namespace MoneyMaster.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<RegisterResponse> LoginAsync(RegisterRequest loginRequest)
+        public Task<ServiceResult<RegisterResponse>> RegisterAsync(RegisterRequest registerRequest)
         {
-            throw new NotImplementedException();
+            var result = new ServiceResult() { Success = true };
+
+            var email = userRepository.GetUserByEmailAsync(registerRequest.Email);
+            if (email != null)
+            {
+                
+            }
         }
     }
 }
