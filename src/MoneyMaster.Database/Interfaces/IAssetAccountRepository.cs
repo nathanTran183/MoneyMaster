@@ -6,10 +6,10 @@ namespace MoneyMaster.Database.Interfaces
     {
         Task<AssetAccount?> GetAssetAccountByIdAsync(int id);
         Task<IEnumerable<AssetAccount>> GetAssetAccountsAsync();
-        Task<IEnumerable<AssetAccount>> GetAssetAccountsByCreatorIdAsync(string creatorId);
+        Task<IEnumerable<AssetAccount>> GetAssetAccountsByUserIdAsync(string userId);
         Task<int> AddAssetAccountAsync(AssetAccount assetAccount);
         Task UpdateAssetAccountAsync(AssetAccount account);
         Task DeleteAssetAccountAsync(AssetAccount account);
-        Task<bool> AssetAccountNameExistByCreatorId(int id, string creatorId, string name);
+        Task<bool> AssetAccountNameExistByUserId(int id, string userId, string name);
     }
 }

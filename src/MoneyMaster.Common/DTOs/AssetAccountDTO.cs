@@ -1,5 +1,4 @@
 ﻿using MoneyMaster.Common.Enums;
-using System;
 
 namespace MoneyMaster.Common.DTOs
 {
@@ -7,6 +6,5 @@ namespace MoneyMaster.Common.DTOs
     {
         public string Name { get; set; }
         public AssetType AssetType { get; set; }
-        public string CreatorId { get; set; }
     }
 }

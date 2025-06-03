@@ -11,13 +11,13 @@ namespace MoneyMaster.Database.Configurations
             base.Configure(builder);
             builder.ToTable(nameof(Category));
 
-            builder.HasOne(c => c.Creator)
+            builder.HasOne(c => c.User)
                 .WithMany(c => c.Categories)
-                .HasForeignKey(c => c.CreatorId)
+                .HasForeignKey(c => c.UserId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
-            builder.HasIndex(c => new { c.Name, c.CreatorId }).IsUnique();
+            builder.HasIndex(c => new { c.Name, c.UserId }).IsUnique();
             builder.Property(c => c.Name)
                 .HasMaxLength(200)
                 .IsRequired();

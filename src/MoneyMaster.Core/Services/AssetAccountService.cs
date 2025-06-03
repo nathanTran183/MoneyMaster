@@ -39,16 +39,16 @@ namespace MoneyMaster.Service.Services
             return result;
         }
 
-        public async Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccountsByCreatorIdAsync(string creatorId)
+        public async Task<ServiceResult<IEnumerable<AssetAccountDTO>>> GetAssetAccountsByUserIdAsync(string userId)
         {
             var result = new ServiceResult<IEnumerable<AssetAccountDTO>>();
-            var creator = await userRepository.GetUserByIdAsync(creatorId);
-            if (creator == null)
+            var user = await userRepository.GetUserByIdAsync(userId);
+            if (user == null)
             {
-                result.AddErrors($"User Id = {creatorId} is not existed.");
+                result.AddErrors($"User Id = {userId} is not existed.");
                 return result;
             }
-            var assetAccounts = await assetAccountRepository.GetAssetAccountsByCreatorIdAsync(creatorId);
+            var assetAccounts = await assetAccountRepository.GetAssetAccountsByUserIdAsync(userId);
             result.Value = mapper.Map<IEnumerable<AssetAccountDTO>>(assetAccounts);
             return result;
         }
@@ -56,7 +56,7 @@ namespace MoneyMaster.Service.Services
         public async Task<ServiceResult<int>> AddAssetAccountAsync(AssetAccountDTO assetAccountDTO)
         {
             var result = new ServiceResult<int>();
-            var isNameUnique = await assetAccountRepository.AssetAccountNameExistByCreatorId(assetAccountDTO.Id, assetAccountDTO.CreatorId, assetAccountDTO.Name);
+            var isNameUnique = await assetAccountRepository.AssetAccountNameExistByUserId(assetAccountDTO.Id, assetAccountDTO.UserId, assetAccountDTO.Name);
             if (isNameUnique)
             {
                 result.AddErrors($"The Asset Account named {assetAccountDTO.Name} is existed.");
@@ -79,7 +79,7 @@ namespace MoneyMaster.Service.Services
                 return result;
             }
 
-            var isNameUnique = await assetAccountRepository.AssetAccountNameExistByCreatorId(assetAccountDTO.Id, assetAccountDTO.CreatorId, assetAccountDTO.Name);
+            var isNameUnique = await assetAccountRepository.AssetAccountNameExistByUserId(assetAccountDTO.Id, assetAccountDTO.UserId, assetAccountDTO.Name);
             if (isNameUnique)
             {
                 result.AddErrors($"The Asset Account named {assetAccountDTO.Name} is existed.");

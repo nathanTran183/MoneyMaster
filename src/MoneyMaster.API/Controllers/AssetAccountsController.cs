@@ -23,7 +23,7 @@ namespace MoneyMaster.Api.Controllers
         [HttpGet("{UserId}")]
         public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountByUserIdAsync(string userId)
         {
-            var result = await assetAccountService.GetAssetAccountsByCreatorIdAsync(userId);
+            var result = await assetAccountService.GetAssetAccountsByUserIdAsync(userId);
             if (result.Success)
             {
                 return Ok(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateSuccess(result.Value));
@@ -38,7 +38,7 @@ namespace MoneyMaster.Api.Controllers
         {
             try
             {
-                var assetAccount = new AssetAccountDTO { Name = req.Name, CreatorId = req.UserId, AssetType = req.AssetType };
+                var assetAccount = new AssetAccountDTO { Name = req.Name, UserId = req.UserId, AssetType = req.AssetType };
                 var result = await assetAccountService.AddAssetAccountAsync(assetAccount);
                 if (result.Success)
                 {
@@ -63,7 +63,7 @@ namespace MoneyMaster.Api.Controllers
         {
             try
             {
-                var assetAccount = new AssetAccountDTO { Name = req.Name, CreatorId = req.UserId, AssetType = req.AssetType };
+                var assetAccount = new AssetAccountDTO { Name = req.Name, UserId = req.UserId, AssetType = req.AssetType };
                 var result = await assetAccountService.UpdateAssetAccountAsync(assetAccount);
                 if (result.Success)
                 {

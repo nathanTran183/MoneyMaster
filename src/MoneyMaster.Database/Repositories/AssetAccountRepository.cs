@@ -6,48 +6,48 @@ namespace MoneyMaster.Database.Repositories;
 
 public class AssetAccountRepository : IAssetAccountRepository
 {
-    private readonly MoneyMasterContext _context;
+    private readonly MoneyMasterContext context;
     public AssetAccountRepository(MoneyMasterContext context)
     {
-        _context = context;
+        this.context = context;
     }
 
     public async Task<AssetAccount?> GetAssetAccountByIdAsync(int id)
     {
-        return await _context.AssetAccounts.FindAsync(id);
+        return await context.AssetAccounts.FindAsync(id);
     }
 
     public async Task<IEnumerable<AssetAccount>> GetAssetAccountsAsync()
     {
-        return await _context.AssetAccounts.ToListAsync();
+        return await context.AssetAccounts.ToListAsync();
     }
 
-    public async Task<IEnumerable<AssetAccount>> GetAssetAccountsByCreatorIdAsync(string creatorId)
+    public async Task<IEnumerable<AssetAccount>> GetAssetAccountsByUserIdAsync(string userId)
     {
-        return await _context.AssetAccounts.Where(aa => aa.CreatorId == creatorId).ToListAsync();
+        return await context.AssetAccounts.Where(aa => aa.UserId == userId).ToListAsync();
     }
 
     public async Task<int> AddAssetAccountAsync(AssetAccount assetAccount)
     {
-        await _context.AssetAccounts.AddAsync(assetAccount);
-        await _context.SaveChangesAsync();
+        await context.AssetAccounts.AddAsync(assetAccount);
+        await context.SaveChangesAsync();
         return assetAccount.Id;
     }
 
     public Task UpdateAssetAccountAsync(AssetAccount assetAccount)
     {
-        _context.AssetAccounts.Update(assetAccount);
-        return _context.SaveChangesAsync();
+        context.AssetAccounts.Update(assetAccount);
+        return context.SaveChangesAsync();
     }
 
     public Task DeleteAssetAccountAsync(AssetAccount assetAccount)
     {
-        _context.AssetAccounts.Remove(assetAccount);
-        return _context.SaveChangesAsync();
+        context.AssetAccounts.Remove(assetAccount);
+        return context.SaveChangesAsync();
     }
 
-    public async Task<bool> AssetAccountNameExistByCreatorId(int id, string creatorId, string name)
+    public Task<bool> AssetAccountNameExistByUserId(int id, string userId, string name)
     {
-        return await _context.AssetAccounts.AnyAsync(a => a.Id != id && a.Name == name && a.CreatorId == creatorId);
+        return context.AssetAccounts.AnyAsync(a => a.Id != id && a.Name == name && a.UserId == userId);
     }
 }

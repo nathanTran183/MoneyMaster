@@ -11,9 +11,9 @@ namespace MoneyMaster.Database.Configurations
             base.Configure(builder);
             builder.ToTable(nameof(DebtLoan));
 
-            builder.HasOne(dl => dl.Creator)
+            builder.HasOne(dl => dl.User)
                 .WithMany(c => c.DebtLoans)
-                .HasForeignKey(dl => dl.CreatorId)
+                .HasForeignKey(dl => dl.UserId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
             builder.HasOne(dl => dl.AssetAccount)
