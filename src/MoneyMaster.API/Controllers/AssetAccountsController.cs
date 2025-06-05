@@ -19,9 +19,21 @@ namespace MoneyMaster.Api.Controllers
             this.logger = logger;
         }
 
+        // GET api/<AssetAccountsController>
+        public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountsAsync()
+        {
+            var result = await assetAccountService.GetAssetAccountsAsync();
+            if (result.Success)
+            {
+                return Ok(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateSuccess(result.Value));
+            }
+
+            return NotFound(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateError(result.Errors, "Failed to retrieve Asset Accounts"));
+        }
+
         // GET api/<AssetAccountsController>/4
         [HttpGet("{UserId}")]
-        public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountByUserIdAsync(string userId)
+        public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountsByUserIdAsync(string userId)
         {
             var result = await assetAccountService.GetAssetAccountsByUserIdAsync(userId);
             if (result.Success)
@@ -47,13 +59,13 @@ namespace MoneyMaster.Api.Controllers
                 }
                 else
                 {
-                    return BadRequest(ResponseResult<AssetAccountDTO>.CreateError(result.Errors, "Failed to retrieve Asset Account"));
+                    return BadRequest(ResponseResult<AssetAccountDTO>.CreateError(result.Errors, "Failed to add new Asset Account"));
                 }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
-                return StatusCode(500, "An error occurred while adding the asset account");
+                return StatusCode(500, "An error occurred while adding the Asset Account");
             }
         }
 
@@ -77,7 +89,7 @@ namespace MoneyMaster.Api.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
-                return StatusCode(500, "An error occurred while updating the asset account");
+                return StatusCode(500, "An error occurred while updating the Asset Account");
             }
         }
         
@@ -100,7 +112,7 @@ namespace MoneyMaster.Api.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
-                return StatusCode(500, "An error occurred while deleting the asset account");
+                return StatusCode(500, "An error occurred while deleting the Asset Account");
             }
         }
     }
