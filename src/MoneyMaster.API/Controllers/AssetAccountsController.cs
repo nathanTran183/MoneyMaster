@@ -19,11 +19,24 @@ namespace MoneyMaster.Api.Controllers
             this.logger = logger;
         }
 
-        // GET api/<AssetAccountsController>/4
-        [HttpGet("{UserId}")]
-        public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountByUserIdAsync(string userId)
+        // GET api/<AssetAccountsController>
+        [HttpGet()]
+        public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountsAsync()
         {
-            var result = await assetAccountService.GetAssetAccountsByCreatorIdAsync(userId);
+            var result = await assetAccountService.GetAssetAccountsAsync();
+            if (result.Success)
+            {
+                return Ok(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateSuccess(result.Value));
+            }
+
+            return NotFound(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateError(result.Errors, "Failed to retrieve Asset Accounts"));
+        }
+
+        // GET api/<AssetAccountsController>/4
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountsByUserIdAsync(string userId)
+        {
+            var result = await assetAccountService.GetAssetAccountsByUserIdAsync(userId);
             if (result.Success)
             {
                 return Ok(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateSuccess(result.Value));
@@ -38,7 +51,7 @@ namespace MoneyMaster.Api.Controllers
         {
             try
             {
-                var assetAccount = new AssetAccountDTO { Name = req.Name, CreatorId = req.UserId, AssetType = req.AssetType };
+                var assetAccount = new AssetAccountDTO { Name = req.Name, UserId = req.UserId, AssetType = req.AssetType };
                 var result = await assetAccountService.AddAssetAccountAsync(assetAccount);
                 if (result.Success)
                 {
@@ -47,23 +60,23 @@ namespace MoneyMaster.Api.Controllers
                 }
                 else
                 {
-                    return BadRequest(ResponseResult<AssetAccountDTO>.CreateError(result.Errors, "Failed to retrieve Asset Account"));
+                    return BadRequest(ResponseResult<AssetAccountDTO>.CreateError(result.Errors, "Failed to add new Asset Account"));
                 }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
-                return StatusCode(500, "An error occurred while adding the asset account");
+                return StatusCode(500, "An error occurred while adding the Asset Account");
             }
         }
 
-        // PUT api/<AssetAccountsController>
-        [HttpPut]
-        public async Task<IActionResult> UpdateAssetAccountAsync([FromBody] UpdateAssetAccountRequest req)
+        // PUT api/<AssetAccountsController>/4
+        [HttpPut("{assetAccountId}")]
+        public async Task<IActionResult> UpdateAssetAccountAsync(int assetAccountId, [FromBody] UpdateAssetAccountRequest req)
         {
             try
             {
-                var assetAccount = new AssetAccountDTO { Name = req.Name, CreatorId = req.UserId, AssetType = req.AssetType };
+                var assetAccount = new AssetAccountDTO { Id = assetAccountId, Name = req.Name, UserId = req.UserId, AssetType = req.AssetType };
                 var result = await assetAccountService.UpdateAssetAccountAsync(assetAccount);
                 if (result.Success)
                 {
@@ -77,17 +90,17 @@ namespace MoneyMaster.Api.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
-                return StatusCode(500, "An error occurred while updating the asset account");
+                return StatusCode(500, "An error occurred while updating the Asset Account");
             }
         }
         
         // DELETE api/<AssetAccountsController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<AssetAccountDTO>> DeleteAssetAccountAsync([FromBody] DeleteAssetAccountRequest req)
+        [HttpDelete("{assetAccountId}")]
+        public async Task<ActionResult<AssetAccountDTO>> DeleteAssetAccountAsync(int assetAccountId)
         {
             try
             {
-                var result = await assetAccountService.DeleteAssetAccountAsync(req.Id);
+                var result = await assetAccountService.DeleteAssetAccountAsync(assetAccountId);
                 if (result.Success)
                 {
                     return Ok(ResponseResult<object>.CreateSuccess(null));
@@ -100,7 +113,7 @@ namespace MoneyMaster.Api.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex, ex.Message);
-                return StatusCode(500, "An error occurred while deleting the asset account");
+                return StatusCode(500, "An error occurred while deleting the Asset Account");
             }
         }
     }
