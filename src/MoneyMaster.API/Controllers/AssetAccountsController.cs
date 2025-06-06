@@ -20,6 +20,7 @@ namespace MoneyMaster.Api.Controllers
         }
 
         // GET api/<AssetAccountsController>
+        [HttpGet()]
         public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountsAsync()
         {
             var result = await assetAccountService.GetAssetAccountsAsync();
@@ -32,7 +33,7 @@ namespace MoneyMaster.Api.Controllers
         }
 
         // GET api/<AssetAccountsController>/4
-        [HttpGet("{UserId}")]
+        [HttpGet("{userId}")]
         public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountsByUserIdAsync(string userId)
         {
             var result = await assetAccountService.GetAssetAccountsByUserIdAsync(userId);
@@ -69,13 +70,13 @@ namespace MoneyMaster.Api.Controllers
             }
         }
 
-        // PUT api/<AssetAccountsController>
-        [HttpPut]
-        public async Task<IActionResult> UpdateAssetAccountAsync([FromBody] UpdateAssetAccountRequest req)
+        // PUT api/<AssetAccountsController>/4
+        [HttpPut("{assetAccountId}")]
+        public async Task<IActionResult> UpdateAssetAccountAsync(int assetAccountId, [FromBody] UpdateAssetAccountRequest req)
         {
             try
             {
-                var assetAccount = new AssetAccountDTO { Name = req.Name, UserId = req.UserId, AssetType = req.AssetType };
+                var assetAccount = new AssetAccountDTO { Id = assetAccountId, Name = req.Name, UserId = req.UserId, AssetType = req.AssetType };
                 var result = await assetAccountService.UpdateAssetAccountAsync(assetAccount);
                 if (result.Success)
                 {
@@ -94,12 +95,12 @@ namespace MoneyMaster.Api.Controllers
         }
         
         // DELETE api/<AssetAccountsController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<AssetAccountDTO>> DeleteAssetAccountAsync([FromBody] DeleteAssetAccountRequest req)
+        [HttpDelete("{assetAccountId}")]
+        public async Task<ActionResult<AssetAccountDTO>> DeleteAssetAccountAsync(int assetAccountId)
         {
             try
             {
-                var result = await assetAccountService.DeleteAssetAccountAsync(req.Id);
+                var result = await assetAccountService.DeleteAssetAccountAsync(assetAccountId);
                 if (result.Success)
                 {
                     return Ok(ResponseResult<object>.CreateSuccess(null));

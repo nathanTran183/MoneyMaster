@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Common.DTOs;
-using MoneyMaster.Common.Models.Requests.AssetAccount;
+using MoneyMaster.Common.Models.Requests.Category;
 using MoneyMaster.Common.Models.Responses;
 using MoneyMaster.Service.Interfaces;
 
@@ -34,7 +34,7 @@ namespace MoneyMaster.Api.Controllers
 
         // POST api/<CategoriesController>
         [HttpPost]
-        public async Task<ActionResult<ResponseResult<CategoryDTO>>> AddCategoryAsync([FromBody] AddAssetAccountRequest req)
+        public async Task<ActionResult<ResponseResult<CategoryDTO>>> AddCategoryAsync([FromBody] AddCategoryRequest req)
         {
             try
             {
@@ -57,9 +57,9 @@ namespace MoneyMaster.Api.Controllers
             }
         }
 
-        // PUT api/<CategoriesController>
-        [HttpPut]
-        public async Task<IActionResult> UpdateAssetAccountAsync([FromBody] UpdateAssetAccountRequest req)
+        // PUT api/<CategoriesController>/4
+        [HttpPut("{categoryId}")]
+        public async Task<IActionResult> UpdateCategoryAsync(int categoryId, [FromBody] UpdateCategoryRequest req)
         {
             try
             {
@@ -81,13 +81,13 @@ namespace MoneyMaster.Api.Controllers
             }
         }
 
-        // DELETE api/<AssetAccountsController>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<CategoryDTO>> DeleteAssetAccountAsync([FromBody] DeleteAssetAccountRequest req)
+        // DELETE api/<CategorysController>/5
+        [HttpDelete("{categoryId}")]
+        public async Task<ActionResult<CategoryDTO>> DeleteCategoryAsync(int categoryId)
         {
             try
             {
-                var result = await categoryService.DeleteCategoryAsync(req.Id);
+                var result = await categoryService.DeleteCategoryAsync(categoryId);
                 if (result.Success)
                 {
                     return Ok(ResponseResult<object>.CreateSuccess(null));
