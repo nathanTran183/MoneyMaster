@@ -29,13 +29,14 @@ namespace MoneyMaster.Service.Services
 
         public Task<ServiceResult<RegisterResponse>> RegisterAsync(RegisterRequest registerRequest)
         {
-            var result = new ServiceResult() { Success = true };
+            //var result = new ServiceResult() { Success = true };
 
-            var email = userRepository.GetUserByEmailAsync(registerRequest.Email);
-            if (email != null)
-            {
+            //var email = userRepository.GetUserByEmailAsync(registerRequest.Email);
+            //if (email != null)
+            //{
                 
-            }
+            //}
+            throw new NotImplementedException();
         }
     }
 }

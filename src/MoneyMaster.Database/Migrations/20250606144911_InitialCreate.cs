@@ -169,14 +169,14 @@ namespace MoneyMaster.Database.Migrations
                     Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AssetAccount", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AssetAccount_User_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_AssetAccount_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -192,14 +192,14 @@ namespace MoneyMaster.Database.Migrations
                     Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Category_User_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_Category_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -215,14 +215,14 @@ namespace MoneyMaster.Database.Migrations
                     Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Family", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Family_User_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_Family_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id");
                 });
@@ -240,7 +240,7 @@ namespace MoneyMaster.Database.Migrations
                     Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -252,8 +252,8 @@ namespace MoneyMaster.Database.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DebtLoan_User_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_DebtLoan_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id");
                 });
@@ -265,11 +265,12 @@ namespace MoneyMaster.Database.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -281,8 +282,8 @@ namespace MoneyMaster.Database.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SubCategory_User_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_SubCategory_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id");
                 });
@@ -326,7 +327,7 @@ namespace MoneyMaster.Database.Migrations
                     Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -338,8 +339,8 @@ namespace MoneyMaster.Database.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Budget_User_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_Budget_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id");
                 });
@@ -361,7 +362,7 @@ namespace MoneyMaster.Database.Migrations
                     Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -384,8 +385,8 @@ namespace MoneyMaster.Database.Migrations
                         principalTable: "SubCategory",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_RecurringTransaction_User_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_RecurringTransaction_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id");
                 });
@@ -406,7 +407,7 @@ namespace MoneyMaster.Database.Migrations
                     Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatorId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -429,8 +430,8 @@ namespace MoneyMaster.Database.Migrations
                         principalTable: "SubCategory",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Transaction_User_CreatorId",
-                        column: x => x.CreatorId,
+                        name: "FK_Transaction_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id");
                 });
@@ -463,20 +464,15 @@ namespace MoneyMaster.Database.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AssetAccount_CreatorId",
+                name: "IX_AssetAccount_Name_UserId",
                 table: "AssetAccount",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AssetAccount_Name_CreatorId",
-                table: "AssetAccount",
-                columns: new[] { "Name", "CreatorId" },
+                columns: new[] { "Name", "UserId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Budget_CreatorId",
-                table: "Budget",
-                column: "CreatorId");
+                name: "IX_AssetAccount_UserId",
+                table: "AssetAccount",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Budget_SubCategoryId",
@@ -484,15 +480,20 @@ namespace MoneyMaster.Database.Migrations
                 column: "SubCategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_CreatorId",
-                table: "Category",
-                column: "CreatorId");
+                name: "IX_Budget_UserId",
+                table: "Budget",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Category_Name_CreatorId",
+                name: "IX_Category_Name_UserId",
                 table: "Category",
-                columns: new[] { "Name", "CreatorId" },
+                columns: new[] { "Name", "UserId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Category_UserId",
+                table: "Category",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DebtLoan_AssetAccountId",
@@ -500,20 +501,20 @@ namespace MoneyMaster.Database.Migrations
                 column: "AssetAccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DebtLoan_CreatorId",
+                name: "IX_DebtLoan_UserId",
                 table: "DebtLoan",
-                column: "CreatorId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Family_CreatorId",
+                name: "IX_Family_Name_UserId",
                 table: "Family",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Family_Name_CreatorId",
-                table: "Family",
-                columns: new[] { "Name", "CreatorId" },
+                columns: new[] { "Name", "UserId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Family_UserId",
+                table: "Family",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FamilyMember_FamilyId_MemberId",
@@ -532,11 +533,6 @@ namespace MoneyMaster.Database.Migrations
                 column: "AssetAccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecurringTransaction_CreatorId",
-                table: "RecurringTransaction",
-                column: "CreatorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RecurringTransaction_FamilyId",
                 table: "RecurringTransaction",
                 column: "FamilyId");
@@ -547,14 +543,14 @@ namespace MoneyMaster.Database.Migrations
                 column: "SubCategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RecurringTransaction_UserId",
+                table: "RecurringTransaction",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SubCategory_CategoryId",
                 table: "SubCategory",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SubCategory_CreatorId",
-                table: "SubCategory",
-                column: "CreatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SubCategory_Name_CategoryId",
@@ -563,14 +559,14 @@ namespace MoneyMaster.Database.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_SubCategory_UserId",
+                table: "SubCategory",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transaction_AssetAccountId",
                 table: "Transaction",
                 column: "AssetAccountId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transaction_CreatorId",
-                table: "Transaction",
-                column: "CreatorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_FamilyId",
@@ -581,6 +577,11 @@ namespace MoneyMaster.Database.Migrations
                 name: "IX_Transaction_SubCategoryId",
                 table: "Transaction",
                 column: "SubCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transaction_UserId",
+                table: "Transaction",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
