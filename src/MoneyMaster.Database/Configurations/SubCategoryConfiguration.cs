@@ -16,9 +16,9 @@ namespace MoneyMaster.Database.Configurations
                 .HasForeignKey(sc => sc.CategoryId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
-            builder.HasOne(sc => sc.Creator)
+            builder.HasOne(sc => sc.User)
                 .WithMany(u => u.SubCategories)
-                .HasForeignKey(sc => sc.CreatorId)
+                .HasForeignKey(sc => sc.UserId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
