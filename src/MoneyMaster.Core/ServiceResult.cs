@@ -38,7 +38,7 @@
         /// </summary>
         public ServiceResult()
         {
-            _success = false;
+            _success = true;
             Errors = null;
         }
 

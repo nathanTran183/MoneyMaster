@@ -1,43 +1,55 @@
-﻿using MoneyMaster.Database.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MoneyMaster.Database.Entities;
 using MoneyMaster.Database.Interfaces;
 
 namespace MoneyMaster.Database.Repositories
 {
     public class SubCategoryRepository : ISubCategoryRepository
     {
-        public Task<int> AddSubCategoryAsync(SubCategory SubCategory)
+        readonly MoneyMasterContext context;
+
+        public SubCategoryRepository(MoneyMasterContext context)
         {
-            throw new NotImplementedException();
+            this.context = context;
         }
 
-        public Task DeleteSubCategoryAsync(SubCategory account)
+        public async Task<IEnumerable<SubCategory>> GetSubCategoriesAsync()
         {
-            throw new NotImplementedException();
+            return await context.SubCategories.ToListAsync();
         }
 
-        public Task<IEnumerable<SubCategory>> GetSubCategoriesByCreatorIdAsync(string creatorId)
+        public async Task<SubCategory?> GetSubCategoryByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await context.SubCategories.FindAsync(id);
         }
 
-        public Task<SubCategory?> GetSubCategoryByCategoryIdAsync(int id)
+        public async Task<IEnumerable<SubCategory>> GetSubCategoriesByCategoryIdAsync(int categoryId)
         {
-            throw new NotImplementedException();
+            return await context.SubCategories.Where(sc => sc.CategoryId == categoryId).ToListAsync();
         }
 
-        public Task<IEnumerable<SubCategory>> GetSubCategorysAsync()
+        public async Task<int> AddSubCategoryAsync(SubCategory subCategory)
         {
-            throw new NotImplementedException();
+            await context.SubCategories.AddAsync(subCategory);
+            await context.SaveChangesAsync();
+            return subCategory.Id;
         }
 
-        public Task<bool> SubCategoryNameExistByCategoryId(int id, string categoryId, string name)
+        public Task UpdateSubCategoryAsync(SubCategory subCategory)
         {
-            throw new NotImplementedException();
+            context.SubCategories.Update(subCategory);
+            return context.SaveChangesAsync();
         }
 
-        public Task UpdateSubCategoryAsync(SubCategory account)
+        public Task DeleteSubCategoryAsync(SubCategory subCategory)
         {
-            throw new NotImplementedException();
+            context.SubCategories.Remove(subCategory);
+            return context.SaveChangesAsync();
+        }
+
+        public Task<bool> SubCategoryNameExistByCategoryId(int id, int categoryId, string name)
+        {
+            return context.SubCategories.AnyAsync(sc => sc.Id != id && sc.CategoryId == categoryId && sc.Name == name);
         }
     }
 }
