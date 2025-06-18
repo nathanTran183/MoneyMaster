@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Common.DTOs;
-using MoneyMaster.Common.Models.Requests.Category;
+using MoneyMaster.Common.Models.Requests;
 using MoneyMaster.Common.Models.Responses;
 using MoneyMaster.Service.Interfaces;
 
@@ -34,7 +34,7 @@ namespace MoneyMaster.Api.Controllers
 
         // POST api/<CategoriesController>
         [HttpPost]
-        public async Task<ActionResult<ResponseResult<CategoryDTO>>> AddCategoryAsync([FromBody] AddCategoryRequest req)
+        public async Task<ActionResult<ResponseResult<CategoryDTO>>> AddCategoryAsync([FromBody] UpsertCategoryRequest req)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace MoneyMaster.Api.Controllers
 
         // PUT api/<CategoriesController>/4
         [HttpPut("{categoryId}")]
-        public async Task<IActionResult> UpdateCategoryAsync(int categoryId, [FromBody] UpdateCategoryRequest req)
+        public async Task<IActionResult> UpdateCategoryAsync(int categoryId, [FromBody] UpsertCategoryRequest req)
         {
             try
             {
