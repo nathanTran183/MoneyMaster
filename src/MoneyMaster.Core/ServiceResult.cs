@@ -19,7 +19,7 @@
         /// <summary>
         /// Gets the errors associated with this service request, if any.
         /// </summary>
-        public List<string>? Errors { get; protected set; }
+        public List<string> Errors { get; protected set; } = [];
 
         /// <summary>
         /// Indicates if the service call has resulted in a 'Severe' error (data corruption, fatally invalid parameters etc.)
@@ -30,7 +30,7 @@
         /// <summary>
         /// Indicates if the ServiceResult has had errors logged after construction.
         /// </summary>
-        public bool HasErrors => Errors != null;
+        public bool HasErrors => Errors.Count > 0;
 
         /// <summary>
         /// Creates a failed service result with no errors. Set <c>Value</c> on success or <c>AddErrors(param string[])</c>
@@ -38,8 +38,7 @@
         /// </summary>
         public ServiceResult()
         {
-            _success = false;
-            Errors = null;
+            _success = true;
         }
 
         /// <summary>
@@ -47,9 +46,8 @@
         /// </summary>
         public virtual void AddErrors(params string[] errors)
         {
-            Errors ??= new List<string>();
-            Errors.AddRange(errors);
             _success = false;
+            Errors.AddRange(errors);
         }
     }
 
@@ -105,10 +103,9 @@
         /// </summary>
         public override void AddErrors(params string[] errors)
         {
-            Errors ??= new List<string>();
+            _success = false;
             Errors.AddRange(errors);
             _value = default!;
-            _success = false;
         }
     }
 }

@@ -29,13 +29,16 @@ namespace MoneyMaster.Service.Services
 
         public async Task<ServiceResult<AssetAccountDTO>> GetAssetAccountByIdAsync(int id)
         {
+            var result = new ServiceResult<AssetAccountDTO>();
             var assetAccount = await assetAccountRepository.GetAssetAccountByIdAsync(id);
             if (assetAccount == null)
             {
-                throw new InvalidDataException($"Asset Account with Id = {id} is not found.");
+                result.AddErrors($"Asset Account with Id = {id} is not found.");
             }
-            var result = new ServiceResult<AssetAccountDTO>();
-            result.Value = mapper.Map<AssetAccountDTO>(assetAccount);
+            else
+            {
+                result.Value = mapper.Map<AssetAccountDTO>(assetAccount);
+            }
             return result;
         }
 
@@ -70,10 +73,10 @@ namespace MoneyMaster.Service.Services
 
         public async Task<ServiceResult> UpdateAssetAccountAsync(AssetAccountDTO assetAccountDTO)
         {
-            var result = new ServiceResult() { Success = true };
+            var result = new ServiceResult();
 
-            var assetAcc = await assetAccountRepository.GetAssetAccountByIdAsync(assetAccountDTO.Id);
-            if (assetAcc == null)
+            var assetAccount = await assetAccountRepository.GetAssetAccountByIdAsync(assetAccountDTO.Id);
+            if (assetAccount == null)
             {
                 result.AddErrors($"The Asset Account named {assetAccountDTO.Name} is not existed.");
                 return result;
@@ -86,14 +89,14 @@ namespace MoneyMaster.Service.Services
                 return result;
             }
 
-            var assetAccount = mapper.Map<AssetAccount>(assetAccountDTO);
+            assetAccount = mapper.Map<AssetAccount>(assetAccountDTO);
             await assetAccountRepository.UpdateAssetAccountAsync(assetAccount);
             return result;
         }
 
         public async Task<ServiceResult> DeleteAssetAccountAsync(int id)
         {
-            var result = new ServiceResult() { Success = true };
+            var result = new ServiceResult();
             var assetAccount = await assetAccountRepository.GetAssetAccountByIdAsync(id);
             if (assetAccount == null)
             {

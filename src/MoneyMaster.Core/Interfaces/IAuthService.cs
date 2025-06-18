@@ -6,6 +6,6 @@ namespace MoneyMaster.Service.Interfaces
     public interface IAuthService
     {
         Task<LoginResponse> LoginAsync(LoginRequest loginRequest);
-        Task<RegisterResponse> RegisterAsync(RegisterRequest loginRequest);
+        Task<ServiceResult<RegisterResponse>> RegisterAsync(RegisterRequest loginRequest);
     }
 }

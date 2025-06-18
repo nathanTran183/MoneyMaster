@@ -7,6 +7,5 @@ namespace MoneyMaster.Common.DTOs
     {
         public string Name { get; set; }
         public virtual IEnumerable<SubCategory> SubCategories { get; set; }
-
     }
 }

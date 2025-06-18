@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Common.DTOs;
-using MoneyMaster.Common.Models.Requests.AssetAccount;
+using MoneyMaster.Common.Models.Requests;
 using MoneyMaster.Common.Models.Responses;
 using MoneyMaster.Service.Interfaces;
 
@@ -29,7 +29,7 @@ namespace MoneyMaster.Api.Controllers
                 return Ok(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateSuccess(result.Value));
             }
 
-            return NotFound(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateError(result.Errors, "Failed to retrieve Asset Accounts"));
+            return NotFound(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateError(result.Errors!, "Failed to retrieve Asset Accounts"));
         }
 
         // GET api/<AssetAccountsController>/4
@@ -42,12 +42,12 @@ namespace MoneyMaster.Api.Controllers
                 return Ok(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateSuccess(result.Value));
             }
             
-            return NotFound(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateError(result.Errors, "Failed to retrieve Asset Account"));
+            return NotFound(ResponseResult<IEnumerable<AssetAccountDTO>>.CreateError(result.Errors!, "Failed to retrieve Asset Account"));
         }
 
         // POST api/<AssetAccountsController>
         [HttpPost]
-        public async Task<ActionResult<ResponseResult<AssetAccountDTO>>> AddAssetAccountAsync([FromBody] AddAssetAccountRequest req)
+        public async Task<IActionResult> AddAssetAccountAsync([FromBody] UpsertAssetAccountRequest req)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace MoneyMaster.Api.Controllers
                 }
                 else
                 {
-                    return BadRequest(ResponseResult<AssetAccountDTO>.CreateError(result.Errors, "Failed to add new Asset Account"));
+                    return BadRequest(ResponseResult<AssetAccountDTO>.CreateError(result.Errors!, "Failed to add new Asset Account"));
                 }
             }
             catch (Exception ex)
@@ -72,7 +72,7 @@ namespace MoneyMaster.Api.Controllers
 
         // PUT api/<AssetAccountsController>/4
         [HttpPut("{assetAccountId}")]
-        public async Task<IActionResult> UpdateAssetAccountAsync(int assetAccountId, [FromBody] UpdateAssetAccountRequest req)
+        public async Task<IActionResult> UpdateAssetAccountAsync(int assetAccountId, [FromBody] UpsertAssetAccountRequest req)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace MoneyMaster.Api.Controllers
                 }
                 else
                 {
-                    return BadRequest(ResponseResult<AssetAccountDTO>.CreateError(result.Errors, "Failed to update Asset Account"));
+                    return BadRequest(ResponseResult<AssetAccountDTO>.CreateError(result.Errors!, "Failed to update Asset Account"));
                 }
             }
             catch (Exception ex)
@@ -107,7 +107,7 @@ namespace MoneyMaster.Api.Controllers
                 }
                 else
                 {
-                    return BadRequest(ResponseResult<object>.CreateError(result.Errors, "Failed to delete Asset Account"));
+                    return BadRequest(ResponseResult<object>.CreateError(result.Errors!, "Failed to delete Asset Account"));
                 }
             }
             catch (Exception ex)

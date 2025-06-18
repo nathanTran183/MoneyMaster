@@ -166,10 +166,6 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -188,11 +184,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("Name", "CreatorId")
+                    b.HasIndex("Name", "UserId")
                         .IsUnique();
 
                     b.ToTable("AssetAccount", (string)null);
@@ -212,10 +212,6 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -230,11 +226,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
-
                     b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Budget", (string)null);
                 });
@@ -250,10 +250,6 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -267,11 +263,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("Name", "CreatorId")
+                    b.HasIndex("Name", "UserId")
                         .IsUnique();
 
                     b.ToTable("Category", (string)null);
@@ -294,10 +294,6 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -312,11 +308,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AssetAccountId");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("DebtLoan", (string)null);
                 });
@@ -332,10 +332,6 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -349,11 +345,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("Name", "CreatorId")
+                    b.HasIndex("Name", "UserId")
                         .IsUnique();
 
                     b.ToTable("Family", (string)null);
@@ -405,10 +405,6 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -439,15 +435,19 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AssetAccountId");
 
-                    b.HasIndex("CreatorId");
-
                     b.HasIndex("FamilyId");
 
                     b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("RecurringTransaction", (string)null);
                 });
@@ -466,14 +466,14 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
+
+                    b.Property<string>("Icon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -483,11 +483,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CreatorId");
+                    b.HasIndex("UserId");
 
                     b.HasIndex("Name", "CategoryId")
                         .IsUnique();
@@ -511,10 +515,6 @@ namespace MoneyMaster.Database.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("Enabled")
                         .ValueGeneratedOnAdd()
@@ -541,15 +541,19 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AssetAccountId");
 
-                    b.HasIndex("CreatorId");
-
                     b.HasIndex("FamilyId");
 
                     b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Transaction", (string)null);
                 });
@@ -681,43 +685,43 @@ namespace MoneyMaster.Database.Migrations
 
             modelBuilder.Entity("MoneyMaster.Database.Entities.AssetAccount", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", "Creator")
+                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
                         .WithMany("AssetAccounts")
-                        .HasForeignKey("CreatorId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Creator");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MoneyMaster.Database.Entities.Budget", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", "Creator")
-                        .WithMany("Budgets")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("MoneyMaster.Database.Entities.SubCategory", "SubCategory")
                         .WithMany("Budgets")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Creator");
+                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                        .WithMany("Budgets")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("SubCategory");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MoneyMaster.Database.Entities.Category", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", "Creator")
+                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
                         .WithMany("Categories")
-                        .HasForeignKey("CreatorId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Creator");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MoneyMaster.Database.Entities.DebtLoan", b =>
@@ -728,26 +732,26 @@ namespace MoneyMaster.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", "Creator")
+                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
                         .WithMany("DebtLoans")
-                        .HasForeignKey("CreatorId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("AssetAccount");
 
-                    b.Navigation("Creator");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MoneyMaster.Database.Entities.Family", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", "Creator")
+                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
                         .WithMany("Families")
-                        .HasForeignKey("CreatorId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Creator");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MoneyMaster.Database.Entities.FamilyMember", b =>
@@ -777,12 +781,6 @@ namespace MoneyMaster.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", "Creator")
-                        .WithMany("RecurringTransactions")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("MoneyMaster.Database.Entities.Family", "Family")
                         .WithMany("RecurringTransactions")
                         .HasForeignKey("FamilyId")
@@ -794,13 +792,19 @@ namespace MoneyMaster.Database.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("AssetAccount");
+                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                        .WithMany("RecurringTransactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("Creator");
+                    b.Navigation("AssetAccount");
 
                     b.Navigation("Family");
 
                     b.Navigation("SubCategory");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MoneyMaster.Database.Entities.SubCategory", b =>
@@ -811,15 +815,15 @@ namespace MoneyMaster.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", "Creator")
+                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
                         .WithMany("SubCategories")
-                        .HasForeignKey("CreatorId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Category");
 
-                    b.Navigation("Creator");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MoneyMaster.Database.Entities.Transaction", b =>
@@ -828,12 +832,6 @@ namespace MoneyMaster.Database.Migrations
                         .WithMany("Transactions")
                         .HasForeignKey("AssetAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MoneyMaster.Database.Entities.User", "Creator")
-                        .WithMany("Transactions")
-                        .HasForeignKey("CreatorId")
-                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("MoneyMaster.Database.Entities.Family", "Family")
@@ -847,13 +845,19 @@ namespace MoneyMaster.Database.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("AssetAccount");
+                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                        .WithMany("Transactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("Creator");
+                    b.Navigation("AssetAccount");
 
                     b.Navigation("Family");
 
                     b.Navigation("SubCategory");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("MoneyMaster.Database.Entities.AssetAccount", b =>

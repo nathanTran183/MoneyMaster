@@ -26,6 +26,7 @@ namespace MoneyMaster.Database.Configurations
             builder.Property(sc => sc.Name)
                 .HasMaxLength(200)
                 .IsRequired();
+            builder.Property(sc => sc.Icon);
         }
     }
 }

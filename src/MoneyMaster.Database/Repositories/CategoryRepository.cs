@@ -35,9 +35,10 @@ namespace MoneyMaster.Database.Repositories
             return category.Id;
         }
 
-        public Task<bool> CategoryNameExistByUserId(int id, string userId, string name)
+        public Task UpdateCategoryAsync(Category category)
         {
-            return context.Categories.AnyAsync(c => c.Id != id && c.UserId == userId && c.Name == name);
+            context.Categories.Update(category);
+            return context.SaveChangesAsync();
         }
 
         public Task DeleteCategoryAsync(Category category)
@@ -46,10 +47,9 @@ namespace MoneyMaster.Database.Repositories
             return context.SaveChangesAsync();
         }
 
-        public Task UpdateCategoryAsync(Category category)
+        public Task<bool> CategoryNameExistByUserId(int id, string userId, string name)
         {
-            context.Categories.Update(category);
-            return context.SaveChangesAsync();
+            return context.Categories.AnyAsync(c => c.Id != id && c.UserId == userId && c.Name == name);
         }
     }
 }
