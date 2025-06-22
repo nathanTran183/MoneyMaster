@@ -12,7 +12,7 @@ namespace MoneyMaster.Service.Services
         private readonly IUserRepository userRepository;
         private readonly IMapper mapper;
 
-        public AssetAccountService(IAssetAccountRepository assetAccountRepository, IUserRepository userRepository, IMapper mapper)
+        public AssetAccountService(IMapper mapper, IAssetAccountRepository assetAccountRepository, IUserRepository userRepository)
         {
             this.assetAccountRepository = assetAccountRepository;
             this.userRepository = userRepository;

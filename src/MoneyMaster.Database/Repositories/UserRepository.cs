@@ -12,6 +12,11 @@ namespace MoneyMaster.Database.Repositories
             this.context = context;
         }
 
+        public async Task<IEnumerable<User>> GetUsersAsync()
+        {
+            return await context.Users.ToListAsync();
+        }
+
         public Task<User?> GetUserByEmailAsync(string email)
         {
             return context.Users.SingleOrDefaultAsync(u => u.Email == email);
@@ -22,11 +27,11 @@ namespace MoneyMaster.Database.Repositories
             return context.Users.SingleOrDefaultAsync(u => u.Id == id);
         }
 
-        public async Task<string> SaveUserAsync(User user)
+        public async Task<User> SaveUserAsync(User user)
         {
             await context.Users.AddAsync(user);
             await context.SaveChangesAsync();
-            return user.Id; 
+            return user; 
         }
 
         public async Task<int> UpdateUserAsync(User user)
