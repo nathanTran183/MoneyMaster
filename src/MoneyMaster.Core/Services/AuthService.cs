@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
 using MoneyMaster.Common.Interfaces;
 using MoneyMaster.Common.Models.Responses;
 using MoneyMaster.Database.Entities;
@@ -9,12 +10,14 @@ namespace MoneyMaster.Service.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly IPasswordHasher passwordHasher;
-        private readonly ITokenService tokenService;
-        private readonly IUserRepository userRepository;
+        readonly UserManager<User> userManager;
+        readonly IPasswordHasher passwordHasher;
+        readonly ITokenService tokenService;
+        readonly IUserRepository userRepository;
 
-        public AuthService(IPasswordHasher passwordHasher, ITokenService tokenService, IUserRepository userRepository)
+        public AuthService(UserManager<User> userManager, IPasswordHasher passwordHasher, ITokenService tokenService, IUserRepository userRepository)
         {
+            this.userManager = userManager;
             this.passwordHasher = passwordHasher;
             this.tokenService = tokenService;
             this.userRepository = userRepository;
@@ -30,7 +33,7 @@ namespace MoneyMaster.Service.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ServiceResult<RegisterResponse>> RegisterAsync(RegisterRequest registerRequest)
+        public async Task<ServiceResult<RegisterResponse>> RegisterUserAsync(RegisterRequest registerRequest)
         {
             var result = new ServiceResult<RegisterResponse>();
 
@@ -45,12 +48,15 @@ namespace MoneyMaster.Service.Services
                 PasswordHash = passwordHasher.HashPassword(registerRequest.Password),
             };
             user = await userRepository.SaveUserAsync(user);
+
+            // TODO - Create Roles and UserRoles, maybe use the AspNetUserTokens to store the refreshToken
             
-            var token = tokenService.GenerateToken(user);
+            var token = tokenService.GenerateAccessToken(user.Id, user.Email!);
+            var refreshToken = tokenService.GenerateRefreshToken();
             var res = new RegisterResponse
             {
                 Token = token,
-                RefreshToken = token,
+                RefreshToken = refreshToken,
                 UserId = user.Id,
                 ExpiresAt = DateTime.UtcNow + TimeSpan.FromSeconds(3600)
             };

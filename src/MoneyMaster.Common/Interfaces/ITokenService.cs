@@ -4,6 +4,8 @@ namespace MoneyMaster.Common.Interfaces
 {
     public interface ITokenService
     {
-        string GenerateToken(RegisterDTO user);
+        string GenerateAccessToken(string id, string email);
+        string GenerateRefreshToken();
+
     }
 }
