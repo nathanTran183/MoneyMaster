@@ -1,11 +1,10 @@
-﻿using MoneyMaster.Common.DTOs;
+﻿using System.Collections.Generic;
 
 namespace MoneyMaster.Common.Interfaces
 {
     public interface ITokenService
     {
-        string GenerateAccessToken(string id, string email);
-        string GenerateRefreshToken();
+        string GenerateToken(string id, string email, IEnumerable<string> userRoles, bool isRefreshToken = false);
 
     }
 }

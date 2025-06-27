@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MoneyMaster.Common.DTOs;
+using MoneyMaster.Database.Entities;
 using MoneyMaster.Database.Interfaces;
 using MoneyMaster.Service.Interfaces;
 
@@ -51,13 +52,15 @@ public class UserService : IUserService
     public async Task<ServiceResult<UserDTO>> AddUserAsync(UserDTO userDTO)
     {
         var result = new ServiceResult<UserDTO>();
-        if(await userRepository.IsEmailExistAsync(userDTO.Email))
+        if (await userRepository.IsEmailExistAsync(userDTO.Email))
         {
-
+            result.AddErrors($"User with email {userDTO.Email} is already existed.");
         }
 
-
-        await userRepository.SaveUserAsync(userDTO)
+        var user = mapper.Map<User>(userDTO);
+        await userRepository.SaveUserAsync(user);
+        result.Value = userDTO;
+        return result;
     }
 
     public Task<ServiceResult> DeleteUserAsync(int id)

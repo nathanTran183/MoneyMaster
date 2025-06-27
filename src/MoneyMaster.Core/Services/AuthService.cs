@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
+using MoneyMaster.Common;
 using MoneyMaster.Common.Interfaces;
 using MoneyMaster.Common.Models.Responses;
 using MoneyMaster.Database.Entities;
@@ -11,14 +12,12 @@ namespace MoneyMaster.Service.Services
     public class AuthService : IAuthService
     {
         readonly UserManager<User> userManager;
-        readonly IPasswordHasher passwordHasher;
         readonly ITokenService tokenService;
         readonly IUserRepository userRepository;
 
-        public AuthService(UserManager<User> userManager, IPasswordHasher passwordHasher, ITokenService tokenService, IUserRepository userRepository)
+        public AuthService(UserManager<User> userManager, ITokenService tokenService, IUserRepository userRepository)
         {
             this.userManager = userManager;
-            this.passwordHasher = passwordHasher;
             this.tokenService = tokenService;
             this.userRepository = userRepository;
         }
@@ -37,22 +36,32 @@ namespace MoneyMaster.Service.Services
         {
             var result = new ServiceResult<RegisterResponse>();
 
-            if (await userRepository.IsEmailExistAsync(registerRequest.Email)) 
+            var user = await userManager.FindByEmailAsync(registerRequest.Email);
+            if (user != null) 
             {
                 result.AddErrors($"{registerRequest.Email} is already registered.");
+                return result;
             }
 
-            var user = new User
+            user = new User
             {
                 Email = registerRequest.Email,
-                PasswordHash = passwordHasher.HashPassword(registerRequest.Password),
+                PasswordHash = registerRequest.Password
             };
-            user = await userRepository.SaveUserAsync(user);
+            var userRes = await userManager.CreateAsync(user);
+            if (!userRes.Succeeded)
+            {
+                foreach (var error in userRes.Errors)
+                {
+                    result.AddErrors(error.Description);
+                }
+                return result;
+            }
 
-            // TODO - Create Roles and UserRoles, maybe use the AspNetUserTokens to store the refreshToken
+            await userManager.AddToRoleAsync(user, Constants.UserRole);
             
-            var token = tokenService.GenerateAccessToken(user.Id, user.Email!);
-            var refreshToken = tokenService.GenerateRefreshToken();
+            var token = tokenService.GenerateToken(user.Id, user.Email!, [Constants.UserRole]);
+            var refreshToken = tokenService.GenerateToken(user.Id, user.Email!, [Constants.UserRole], true);
             var res = new RegisterResponse
             {
                 Token = token,

@@ -12,16 +12,16 @@ namespace MoneyMaster.Common.Services
 {
     public class JwtTokenService : ITokenService
     {
-        private readonly IConfiguration configuration;
+        readonly IConfiguration configuration;
 
         public JwtTokenService(IConfiguration configuration)
         {
             this.configuration = configuration;
         }
 
-        public string GenerateAccessToken(string id, string email)
+        public string GenerateToken(string id, string email, IEnumerable<string> userRoles, bool isRefreshToken = false)
         {
-            var jwtKey = configuration["Jwt:Key"];
+            var jwtKey = isRefreshToken ? configuration["Jwt:RefreshTokenSecretKey"] : configuration["Jwt:Key"];
             var jwtIssuer = configuration["Jwt:Issuer"];
             var jwtAudience = configuration["Jwt:Audience"];
 
@@ -32,40 +32,48 @@ namespace MoneyMaster.Common.Services
 
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new List<Claim>();
 
-            var claims = new List<Claim>
+            if (isRefreshToken)
             {
-                new Claim(ClaimTypes.NameIdentifier, id),
-                new Claim(JwtRegisteredClaimNames.Sub, id),
-                new Claim(JwtRegisteredClaimNames.Email, email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            };
+                claims =
+                [
+                    new(ClaimTypes.NameIdentifier, id),
+                    new(JwtRegisteredClaimNames.Sub, id),
+                    new(JwtRegisteredClaimNames.Email, email),
+                    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                ];
+                foreach (var role in userRoles)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role));
+                }
+            }
+            else
+            {
+                var randomBytes = new byte[64];
+                using var rng = RandomNumberGenerator.Create();
+                rng.GetBytes(randomBytes);
 
-            //var userRoles = await _userManager.GetRolesAsync(user);
-            //foreach (var role in userRoles)
-            //{
-            //    claims.Add(new Claim(ClaimTypes.Role, role));
-            //}
+                claims =
+                [
+                    new("token_type", "refresh"),
+                    new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new("random", Convert.ToBase64String(randomBytes))
+                ];
+            }
 
             var token = new JwtSecurityToken(
                 issuer: jwtIssuer,
                 audience: jwtAudience,
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(30),
+                notBefore: DateTime.UtcNow,
+                expires: isRefreshToken ?
+                    DateTime.UtcNow.AddDays(Convert.ToDouble(configuration["Jwt:RefreshTokenExpirationDays"] ?? "7")) :
+                    DateTime.UtcNow.AddMinutes(Convert.ToDouble(configuration["Jwt:AccessTokenExpirationMinutes"] ?? "15")),
                 signingCredentials: credentials
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        public string GenerateRefreshToken()
-        {
-            var randomNumber = new byte[32];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(randomNumber);
-                return Convert.ToBase64String(randomNumber);
-            }
         }
     }
 }
