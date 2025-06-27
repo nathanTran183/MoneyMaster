@@ -12,9 +12,11 @@ namespace MoneyMaster.Database.Entities
         public int SubCategoryId { get; set; }
         public int? FamilyId { get; set; }
         public int AssetAccountId { get; set; }
+        public int? TransferTransactionId { get; set; }
 
         public virtual SubCategory SubCategory { get; set; }
         public virtual Family? Family { get; set; }
         public virtual AssetAccount AssetAccount { get; set; }
+        public virtual Transaction TransferTransaction { get; set; }
     }
 }

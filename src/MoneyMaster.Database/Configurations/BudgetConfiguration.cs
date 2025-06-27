@@ -11,20 +11,20 @@ namespace MoneyMaster.Database.Configurations
             base.Configure(builder);
             builder.ToTable(nameof(Budget));
             
-            builder.HasOne(fm => fm.User)
-                .WithMany(fm => fm.Budgets)
-                .HasForeignKey(fm => fm.UserId)
+            builder.HasOne(b => b.User)
+                .WithMany(b => b.Budgets)
+                .HasForeignKey(b => b.UserId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-            builder.HasOne(fm => fm.SubCategory)
-                .WithMany(fm => fm.Budgets)
-                .HasForeignKey(fm => fm.SubCategoryId)
+            builder.HasOne(b => b.SubCategory)
+                .WithMany(b => b.Budgets)
+                .HasForeignKey(b => b.SubCategoryId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
-            builder.Property(w => w.Amount)
+            builder.Property(b => b.Amount)
                 .IsRequired();
-            builder.Property(w => w.Month)
+            builder.Property(b => b.Month)
                 .IsRequired();
         }
     }

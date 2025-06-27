@@ -11,36 +11,36 @@ namespace MoneyMaster.Database.Configurations
             base.Configure(builder);
             builder.ToTable(nameof(RecurringTransaction));
 
-            builder.HasOne(aa => aa.User)
-                .WithMany(aa => aa.RecurringTransactions)
-                .HasForeignKey(aa => aa.UserId)
+            builder.HasOne(rt => rt.User)
+                .WithMany(rt => rt.RecurringTransactions)
+                .HasForeignKey(rt => rt.UserId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-            builder.HasOne(aa => aa.Family)
-                .WithMany(aa => aa.RecurringTransactions)
-                .HasForeignKey(aa => aa.FamilyId)
+            builder.HasOne(rt => rt.Family)
+                .WithMany(rt => rt.RecurringTransactions)
+                .HasForeignKey(rt => rt.FamilyId)
                 .OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(aa => aa.SubCategory)
-                .WithMany(aa => aa.RecurringTransactions)
-                .HasForeignKey(aa => aa.SubCategoryId)
+            builder.HasOne(rt => rt.SubCategory)
+                .WithMany(rt => rt.RecurringTransactions)
+                .HasForeignKey(rt => rt.SubCategoryId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-            builder.HasOne(aa => aa.AssetAccount)
-                .WithMany(aa => aa.RecurringTransactions)
-                .HasForeignKey(aa => aa.AssetAccountId)
+            builder.HasOne(rt => rt.AssetAccount)
+                .WithMany(rt => rt.RecurringTransactions)
+                .HasForeignKey(rt => rt.AssetAccountId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
-            builder.Property(aa => aa.Amount)
+            builder.Property(rt => rt.Amount)
                 .IsRequired();
-            builder.Property(aa => aa.TransactionType)
+            builder.Property(rt => rt.TransactionType)
                 .HasConversion<string>()
                 .HasMaxLength(100)
                 .IsRequired();
-            builder.Property(aa => aa.Note);
-            builder.Property(aa => aa.StartDate)
+            builder.Property(rt => rt.Note);
+            builder.Property(rt => rt.StartDate)
                 .IsRequired();
-            builder.Property(aa => aa.Frequency)
+            builder.Property(rt => rt.Frequency)
                 .HasConversion<string>()
                 .HasMaxLength(100)
                 .IsRequired();
