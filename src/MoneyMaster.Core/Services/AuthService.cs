@@ -60,8 +60,8 @@ namespace MoneyMaster.Service.Services
 
             await userManager.AddToRoleAsync(user, Constants.UserRole);
             
-            var token = tokenService.GenerateToken(user.Id, user.Email!, [Constants.UserRole]);
-            var refreshToken = tokenService.GenerateToken(user.Id, user.Email!, [Constants.UserRole], true);
+            var token = tokenService.GenerateAccessToken(user.Id, user.Email!, [Constants.UserRole]);
+            var refreshToken = tokenService.GenerateAccessToken(user.Id, user.Email!, [Constants.UserRole], true);
             var res = new RegisterResponse
             {
                 Token = token,
