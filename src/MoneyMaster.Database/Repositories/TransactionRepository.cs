@@ -27,6 +27,11 @@ namespace MoneyMaster.Database.Repositories
             return await context.Transactions.Where(t => t.FamilyId == familyId).ToListAsync();
         }
 
+        public Task<Transaction?> GetTransactionByIdAsync(int id)
+        {
+            return context.Transactions.SingleOrDefaultAsync(t => t.Id == id);
+        }
+
         public async Task<int> AddTransactionAsync(Transaction transaction)
         {
             await context.Transactions.AddAsync(transaction);
