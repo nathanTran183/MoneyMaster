@@ -3,7 +3,6 @@ using MoneyMaster.Common.DTOs;
 using MoneyMaster.Database.Entities;
 using MoneyMaster.Database.Interfaces;
 using MoneyMaster.Service.Interfaces;
-using System.Transactions;
 
 namespace MoneyMaster.Service.Services;
 
@@ -47,16 +46,35 @@ public class TransactionService : ITransactionService
         throw new NotImplementedException();
     }
 
-    public Task<ServiceResult> UpdateTransaction(TransactionDTO transactionDTO)
+    public async Task<ServiceResult<TransactionDTO>> GetTransactionById(int id)
     {
-        throw new NotImplementedException();
+        var result = new ServiceResult<TransactionDTO>();
+        var transactions = await transactionRepository.GetTransactionByIdAsync(id);
+        result.Value = mapper.Map<TransactionDTO>(transactions);
+        return result;
     }
 
-    public Task<ServiceResult<int>> AddTransaction(TransactionDTO transactionDTO)
+    public async Task<ServiceResult> UpdateTransaction(TransactionDTO transactionDTO)
+    {
+        var result = new ServiceResult();
+        var transaction = await transactionRepository.GetTransactionByIdAsync(transactionDTO.Id);
+        if (transaction == null)
+        {
+            result.AddErrors($"The Transaction with Id = {transactionDTO.Id} is not found.");
+        }
+        else
+        {
+            await transactionRepository.UpdateTransactionAsync(transaction);
+        }
+        return result;
+    }
+
+    public async Task<ServiceResult<int>> AddTransaction(TransactionDTO transactionDTO)
     {
         var result = new ServiceResult<int>();
-        var transaction = await transactionRepository.GetTransactionByIdAsync(id);
-
+        var transaction = mapper.Map<Transaction>(transactionDTO);
+        result.Value = await transactionRepository.AddTransactionAsync(transaction);
+        return result;
     }
 
     public async Task<ServiceResult> DeleteTransaction(int id)
