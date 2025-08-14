@@ -4,7 +4,7 @@ using MoneyMaster.Database.Entities;
 
 namespace MoneyMaster.Database.Configurations
 {
-    internal class FamilyMemberConfiguration : IEntityTypeConfiguration<FamilyMember>
+    public class FamilyMemberConfiguration : IEntityTypeConfiguration<FamilyMember>
     {
         public void Configure(EntityTypeBuilder<FamilyMember> builder)
         {

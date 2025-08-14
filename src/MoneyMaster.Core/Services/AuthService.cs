@@ -24,6 +24,7 @@ namespace MoneyMaster.Service.Services
 
         public async Task<ServiceResult<LoginResponse>> LoginAsync(LoginRequest loginRequest)
         {
+            var result = new ServiceResult<LoginResponse>();
             //var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
             //if (user == null)
             //{
@@ -60,8 +61,7 @@ namespace MoneyMaster.Service.Services
 
             await userManager.AddToRoleAsync(user, Constants.UserRole);
             
-            var token = tokenService.GenerateAccessToken(user.Id, user.Email!, [Constants.UserRole]);
-            var refreshToken = tokenService.GenerateAccessToken(user.Id, user.Email!, [Constants.UserRole], true);
+            var (token, refreshToken) = await tokenService.GenerateTokenAsync(user.Id, user.Email!, [Constants.UserRole]);
             var res = new RegisterResponse
             {
                 Token = token,

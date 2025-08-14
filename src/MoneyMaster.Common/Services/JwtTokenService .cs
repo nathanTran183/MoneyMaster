@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MoneyMaster.Common.Interfaces;
+using MoneyMaster.Common.Utilities.Exceptions;
+using MoneyMaster.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,10 +22,12 @@ namespace MoneyMaster.Common.Services
         readonly string jwtIssuer;
         readonly string jwtAudience;
         readonly IConfiguration configuration;
+        UserManager<User> userManager;
 
-        public JwtTokenService(IConfiguration configuration)
+        public JwtTokenService(IConfiguration configuration, UserManager<User> userManager)
         {
             this.configuration = configuration;
+            this.userManager = userManager;
 
             jwtKey = configuration["Jwt:Key"] ?? string.Empty;
             jwtRefreshKey = configuration["Jwt:RefreshTokenSecretKey"] ?? string.Empty;
@@ -40,36 +45,31 @@ namespace MoneyMaster.Common.Services
             return (accessToken, refreshToken);
         }
 
-        public Task<(string accessToken, string refreshToken)> RefreshTokenAsync(string refreshToken)
+        public async Task<(string accessToken, string refreshToken)> RefreshTokenAsync(string refreshToken)
         {
             var principal = ValidateToken(refreshToken,true);
 
             if (!principal.Claims.Any(c => c.Type == "token_type" && c.Value == "refresh"))
-                return null;
+                throw new NotRefreshTokenTypeException("Token is not refresh token type");
 
+            var userRefreshToken = repository.GetUserRefreshTokenByToken(refreshToken);
+            if (userRefreshToken == null)
+            {
+                throw new InvalidRefreshTokenException("Invalid refresh token"); 
+            }
             // Check if refresh token is still valid in database
-            if (!await IsRefreshTokenValidAsync(refreshToken))
-                return null;
+            //if (!await IsRefreshTokenValidAsync(refreshToken))
+            //    throw new InvalidRefreshTokenException("") 
 
-            // Get user ID from stored refresh token data
-            var userId = await GetUserIdFromRefreshTokenAsync(refreshToken);
-            if (userId == null)
-                return null;
-
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await userManager.FindByIdAsync(userRefreshToken.UserId);
             if (user == null || !user.IsActive)
-                return null;
+                throw new InvalidUserException("Invalid user or not existed");
 
             // Revoke old refresh token
             await RevokeRefreshTokenAsync(refreshToken);
 
             // Generate new tokens
-            return await GenerateTokensAsync(user);
-        }
-
-        private async Task GetUserIdFromRefreshTokenAsync(string refreshToken)
-        {
-            throw new NotImplementedException();
+            return await GenerateTokenAsync(userRefreshToken.UserId, user.);
         }
 
         public Task RevokeRefreshTokenAsync(string refreshToken)

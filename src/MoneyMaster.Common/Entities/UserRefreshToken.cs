@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MoneyMaster.Database.Entities;
+using System;
 
 namespace MoneyMaster.Common.Entities
 {
-    internal class UserRefreshToken
+    public class UserRefreshToken : BaseEntity
     {
+        public string Token { get; set; } 
+        public DateTime ExpiresAt { get; set; }
+        public bool IsRevoked { get; set; }
+        public bool IsActive { get; set; }
     }
 }
