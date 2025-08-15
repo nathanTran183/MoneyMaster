@@ -2,18 +2,15 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MoneyMaster.Common.Entities;
-using MoneyMaster.Common.Interfaces;
 using MoneyMaster.Common.Utilities.Exceptions;
-using System;
-using System.Collections.Generic;
+using MoneyMaster.Database.Interfaces;
+using MoneyMaster.Service.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace MoneyMaster.Common.Services
+namespace MoneyMaster.Service.Services
 {
     public class JwtTokenService : ITokenService
     {
@@ -23,11 +20,13 @@ namespace MoneyMaster.Common.Services
         readonly string jwtAudience;
         readonly IConfiguration configuration;
         UserManager<User> userManager;
+        IUserRefreshTokenRepository tokenRepository;
 
-        public JwtTokenService(IConfiguration configuration, UserManager<User> userManager)
+        public JwtTokenService(IConfiguration configuration, UserManager<User> userManager, IUserRefreshTokenRepository tokenRepository)
         {
             this.configuration = configuration;
             this.userManager = userManager;
+            this.tokenRepository = tokenRepository;
 
             jwtKey = configuration["Jwt:Key"] ?? string.Empty;
             jwtRefreshKey = configuration["Jwt:RefreshTokenSecretKey"] ?? string.Empty;
@@ -48,28 +47,35 @@ namespace MoneyMaster.Common.Services
         public async Task<(string accessToken, string refreshToken)> RefreshTokenAsync(string refreshToken)
         {
             var principal = ValidateToken(refreshToken, true);
-
+            if (principal == null)
+            {
+                throw new Exception("Fail to validate refresh token");
+            }
             if (!principal.Claims.Any(c => c.Type == "token_type" && c.Value == "refresh"))
+            {
                 throw new NotRefreshTokenTypeException("Token is not refresh token type");
+            }
 
-            var userRefreshToken = repository.GetUserRefreshTokenByToken(refreshToken);
+            var userRefreshToken = tokenRepository.GetUserRefreshTokenByToken(refreshToken);
             if (userRefreshToken == null)
+            {
+                throw new InvalidRefreshTokenException("Refresh token does not exist");
+            }
+            
+            if (!await tokenRepository.IsRefreshTokenValidAsync(refreshToken))
             {
                 throw new InvalidRefreshTokenException("Invalid refresh token");
             }
-            // Check if refresh token is still valid in database
-            if (!await IsRefreshTokenValidAsync(refreshToken))
-                throw new InvalidRefreshTokenException("")
 
             var user = await userManager.FindByIdAsync(userRefreshToken.UserId);
             if (user == null || !user.IsActive)
+            {
                 throw new InvalidUserException("Invalid user or not existed");
+            }
 
-            // Revoke old refresh token
             await RevokeRefreshTokenAsync(refreshToken);
-
-            // Generate new tokens
-            return await GenerateTokenAsync(userRefreshToken.UserId, "", []);
+            var userRoles = await userManager.GetRolesAsync(user);
+            return await GenerateTokenAsync(userRefreshToken.UserId, user.Email!, userRoles);
         }
 
         public Task RevokeRefreshTokenAsync(string refreshToken)

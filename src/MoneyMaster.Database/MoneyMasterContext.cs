@@ -6,7 +6,7 @@ using MoneyMaster.Database.Configurations;
 
 namespace MoneyMaster.Database
 {
-    public class MoneyMasterContext : IdentityDbContext<User>
+    public class MoneyMasterContext : IdentityDbContext<User, IdentityRole, string>
     {
         public MoneyMasterContext(DbContextOptions<MoneyMasterContext> options) : base(options) { }
 

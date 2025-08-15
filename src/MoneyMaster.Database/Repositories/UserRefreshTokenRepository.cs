@@ -35,7 +35,7 @@ namespace MoneyMaster.Database.Repositories
             await context.SaveChangesAsync();
         }
 
-        public Task<bool> IsTokenValid(string token)
+        public Task<bool> IsRefreshTokenValidAsync(string token)
         {
             return context.UserRefreshTokens.AnyAsync(t => t.Token == token && DateTime.Now < t.ExpiresAt);
         }

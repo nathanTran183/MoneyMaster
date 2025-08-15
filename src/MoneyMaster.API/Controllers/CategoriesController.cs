@@ -12,9 +12,9 @@ namespace MoneyMaster.Api.Controllers
     public class CategoriesController : ControllerBase
     {
         readonly ICategoryService categoryService;
-        readonly ILogger<CategoriesController> logger;
+        readonly ILogger logger;
 
-        public CategoriesController(ICategoryService categoryService, ILogger<CategoriesController> logger)
+        public CategoriesController(ICategoryService categoryService, ILogger logger)
         {
             this.categoryService = categoryService;
             this.logger = logger;

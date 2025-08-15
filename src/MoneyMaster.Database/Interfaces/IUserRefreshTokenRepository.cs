@@ -9,6 +9,6 @@ namespace MoneyMaster.Database.Interfaces
         Task RevokeUserRefreshToken(int id);
         Task DeleteUserRefreshToken(UserRefreshToken tokenObj);
         Task<int> AddUserRefreshTokenAsync(UserRefreshToken tokenObj);
-        Task<bool> IsTokenValid(string token);
+        Task<bool> IsRefreshTokenValidAsync(string token);
     }
 }

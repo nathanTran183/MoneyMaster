@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 
-namespace MoneyMaster.Common.Interfaces
+namespace MoneyMaster.Service.Interfaces
 {
     public interface ITokenService
     {

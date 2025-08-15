@@ -12,8 +12,8 @@ namespace MoneyMaster.Api.Controllers
     public class AssetAccountsController : ControllerBase
     {
         private readonly IAssetAccountService assetAccountService;
-        private readonly ILogger<AssetAccountsController> logger;
-        public AssetAccountsController(IAssetAccountService assetAccountService, ILogger<AssetAccountsController> logger)
+        private readonly ILogger logger;
+        public AssetAccountsController(IAssetAccountService assetAccountService, ILogger logger)
         {
             this.assetAccountService = assetAccountService;
             this.logger = logger;

@@ -26,11 +26,18 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Services
 builder.Services.AddTransient<IAssetAccountService, AssetAccountService>();
-builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+builder.Services.AddTransient<ISubCategoryService, SubCategoryService>();
+builder.Services.AddTransient<ITokenService, JwtTokenService>();
 builder.Services.AddTransient<ITransactionService, TransactionService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 // Repositories
 builder.Services.AddTransient<IAssetAccountRepository, AssetAccountRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
+builder.Services.AddTransient<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -125,6 +132,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseRouting();
 app.MapControllers();
 
 app.Run();
