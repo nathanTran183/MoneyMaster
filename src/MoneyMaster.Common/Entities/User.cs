@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace MoneyMaster.Database.Entities
+namespace MoneyMaster.Common.Entities
 {
     public class User : IdentityUser
     {
@@ -26,5 +26,6 @@ namespace MoneyMaster.Database.Entities
         public virtual ICollection<Transaction> Transactions { get; set; } = null!;
         public virtual ICollection<RecurringTransaction> RecurringTransactions { get; set; } = null!;
         public virtual ICollection<DebtLoan> DebtLoans { get; set; } = null!;
+        public virtual ICollection<UserRefreshToken> UserRefreshTokens { get; set; } = null!;
     }
 }

@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MoneyMaster.Common;
+using MoneyMaster.Common.Entities;
 using MoneyMaster.Database.Configurations;
-using MoneyMaster.Database.Entities;
-using System.Collections.Generic;
 
 namespace MoneyMaster.Database
 {

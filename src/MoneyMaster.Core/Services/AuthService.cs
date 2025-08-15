@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using MoneyMaster.Common;
+using MoneyMaster.Common.Entities;
 using MoneyMaster.Common.Interfaces;
 using MoneyMaster.Common.Models.Responses;
-using MoneyMaster.Database.Entities;
 using MoneyMaster.Database.Interfaces;
 using MoneyMaster.Service.Interfaces;
 

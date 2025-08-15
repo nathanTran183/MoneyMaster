@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MoneyMaster.Common.Entities;
 using MoneyMaster.Database;
-using MoneyMaster.Database.Entities;
 
 namespace MoneyMaster.Api.Controllers;
 

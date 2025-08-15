@@ -1,7 +1,7 @@
 ﻿using MoneyMaster.Common.Enums;
 using System;
 
-namespace MoneyMaster.Database.Entities
+namespace MoneyMaster.Common.Entities
 {
     public class Transaction : BaseEntity
     {

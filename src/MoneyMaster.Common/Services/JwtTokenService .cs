@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using MoneyMaster.Common.Entities;
 using MoneyMaster.Common.Interfaces;
 using MoneyMaster.Common.Utilities.Exceptions;
-using MoneyMaster.Database.Entities;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -47,7 +47,7 @@ namespace MoneyMaster.Common.Services
 
         public async Task<(string accessToken, string refreshToken)> RefreshTokenAsync(string refreshToken)
         {
-            var principal = ValidateToken(refreshToken,true);
+            var principal = ValidateToken(refreshToken, true);
 
             if (!principal.Claims.Any(c => c.Type == "token_type" && c.Value == "refresh"))
                 throw new NotRefreshTokenTypeException("Token is not refresh token type");
@@ -55,11 +55,11 @@ namespace MoneyMaster.Common.Services
             var userRefreshToken = repository.GetUserRefreshTokenByToken(refreshToken);
             if (userRefreshToken == null)
             {
-                throw new InvalidRefreshTokenException("Invalid refresh token"); 
+                throw new InvalidRefreshTokenException("Invalid refresh token");
             }
             // Check if refresh token is still valid in database
-            //if (!await IsRefreshTokenValidAsync(refreshToken))
-            //    throw new InvalidRefreshTokenException("") 
+            if (!await IsRefreshTokenValidAsync(refreshToken))
+                throw new InvalidRefreshTokenException("")
 
             var user = await userManager.FindByIdAsync(userRefreshToken.UserId);
             if (user == null || !user.IsActive)
@@ -69,7 +69,7 @@ namespace MoneyMaster.Common.Services
             await RevokeRefreshTokenAsync(refreshToken);
 
             // Generate new tokens
-            return await GenerateTokenAsync(userRefreshToken.UserId, user.);
+            return await GenerateTokenAsync(userRefreshToken.UserId, "", []);
         }
 
         public Task RevokeRefreshTokenAsync(string refreshToken)
