@@ -20,6 +20,7 @@ namespace MoneyMaster.Database
         public DbSet<DebtLoan> DebtLoans { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<RecurringTransaction> RecurringTransactions { get; set; }
+        public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -77,6 +78,7 @@ namespace MoneyMaster.Database
             builder.ApplyConfiguration(new DebtLoanConfiguration());
             builder.ApplyConfiguration(new TransactionConfiguration());
             builder.ApplyConfiguration(new RecurringTransactionConfiguration());
+            builder.ApplyConfiguration(new UserRefreshTokenConfiguration());
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
