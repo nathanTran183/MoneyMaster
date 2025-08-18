@@ -176,9 +176,13 @@ namespace MoneyMaster.Service.Services
 
         private async Task StoreRefreshTokenAsync(string userId, string refreshToken)
         {
-            // Implement database logic to store refresh token
-            // You'll need a RefreshToken table or add it to ApplicationUser
-            await Task.CompletedTask; // Placeholder
+            var tokenObj = new UserRefreshToken
+            {
+                UserId = userId,
+                Token = refreshToken,
+                ExpiresAt = DateTime.UtcNow.AddDays(Convert.ToDouble(configuration["Jwt:RefreshTokenExpirationDays"] ?? "15")),
+            };
+            await tokenRepository.AddUserRefreshTokenAsync(tokenObj);
         }
     }
 }

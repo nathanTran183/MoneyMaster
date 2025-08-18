@@ -45,10 +45,10 @@ namespace MoneyMaster.Service.Services
 
             user = new User
             {
+                UserName = registerRequest.Email,
                 Email = registerRequest.Email,
-                PasswordHash = registerRequest.Password
             };
-            var userRes = await userManager.CreateAsync(user);
+            var userRes = await userManager.CreateAsync(user, registerRequest.Password);
             if (!userRes.Succeeded)
             {
                 foreach (var error in userRes.Errors)
