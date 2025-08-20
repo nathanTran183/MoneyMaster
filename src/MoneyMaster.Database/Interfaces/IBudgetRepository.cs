@@ -10,6 +10,6 @@ namespace MoneyMaster.Database.Interfaces
         Task<int> AddBudgetAsync(Budget budget);
         Task UpdateBudgetAsync(Budget budget);
         Task DeleteBudgetAsync(Budget budget);
-        Task<bool> IsBudgetExisted(int id, string userId, DateTime date);
+        Task<bool> IsBudgetExisted(string userId, DateTime date, int subCategoryId);
     }
 }

@@ -45,9 +45,9 @@ namespace MoneyMaster.Database.Repositories
             return context.SaveChangesAsync();
         }
 
-        public Task<bool> IsBudgetExisted(int id, string userId, DateTime date)
+        public Task<bool> IsBudgetExisted(string userId, DateTime date, int subCategoryId)
         {
-            return context.Budgets.AnyAsync(b => b.Id != id && b.UserId == userId && b.Month.Month == date.Month && b.Month.Year == date.Year);
+            return context.Budgets.AnyAsync(b => b.UserId == userId && b.SubCategoryId == subCategoryId && b.Month.Month == date.Month && b.Month.Year == date.Year);
         }
     }
 }
