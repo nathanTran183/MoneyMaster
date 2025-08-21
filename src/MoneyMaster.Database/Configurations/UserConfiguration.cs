@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MoneyMaster.Database.Entities;
+using MoneyMaster.Common.Entities;
 
 namespace MoneyMaster.Database.Configurations
 {
@@ -10,9 +10,10 @@ namespace MoneyMaster.Database.Configurations
         {
             builder.ToTable(nameof(User));
 
-            builder.Property(w => w.FullName)
-                .HasMaxLength(150)
-                .IsRequired();
+            builder.Property(w => w.FirstName)
+                .HasMaxLength(150);
+            builder.Property(w => w.LastName)
+                .HasMaxLength(150);
             builder.Property(w => w.Avatar)
                 .HasMaxLength(250);
         }

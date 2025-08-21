@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MoneyMaster.Database.Entities;
+using MoneyMaster.Common.Entities;
 
 namespace MoneyMaster.Database.Configurations
 {
-    internal class FamilyMemberConfiguration : IEntityTypeConfiguration<FamilyMember>
+    public class FamilyMemberConfiguration : IEntityTypeConfiguration<FamilyMember>
     {
         public void Configure(EntityTypeBuilder<FamilyMember> builder)
         {

@@ -1,0 +1,40 @@
+# Define variable
+@baseUrl = http://localhost:5181
+@username = admin1@example.com
+@password = Admin123@
+
+# @name getToken
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "{{username}}",
+  "password": "{{password}}"
+}
+
+### Use response from previous request
+@token = {{getToken.response.body.accessToken}}
+
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "{{username}}",
+  "password": "{{password}}"
+}
+
+### Test Connection
+GET {{baseUrl}}/api/auth/ping/
+Accept: application/json
+
+### Dynamic variables
+POST {{baseUrl}}/api/transactions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": "{{$guid}}",
+  "amount": {{$randomInt 10 1000}},
+  "description": "Test transaction {{$timestamp}}",
+  "date": "{{$datetime iso8601}}"
+}

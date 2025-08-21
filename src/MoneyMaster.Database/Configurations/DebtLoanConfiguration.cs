@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using MoneyMaster.Database.Entities;
+using MoneyMaster.Common.Entities;
 
 namespace MoneyMaster.Database.Configurations
 {

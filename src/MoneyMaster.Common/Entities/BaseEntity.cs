@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MoneyMaster.Database.Entities
+namespace MoneyMaster.Common.Entities
 {
     public class BaseEntity
     {
