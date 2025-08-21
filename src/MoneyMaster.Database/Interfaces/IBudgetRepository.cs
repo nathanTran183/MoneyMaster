@@ -1,4 +1,4 @@
-﻿using MoneyMaster.Database.Entities;
+﻿using MoneyMaster.Common.Entities;
 
 namespace MoneyMaster.Database.Interfaces
 {

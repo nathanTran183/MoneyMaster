@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MoneyMaster.Database.Entities;
+using MoneyMaster.Common.Entities;
 using MoneyMaster.Database.Interfaces;
 
 namespace MoneyMaster.Database.Repositories

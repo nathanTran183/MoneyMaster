@@ -1,5 +1,5 @@
 ﻿using MoneyMaster.Common.Enums;
-using MoneyMaster.Database.Entities;
+using MoneyMaster.Common.Entities;
 using System;
 
 namespace MoneyMaster.Common.DTOs
