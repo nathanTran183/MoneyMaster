@@ -8,9 +8,9 @@ namespace MoneyMaster.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SubCategoriesController(ISubCategoryService subCategoryService, ILogger<SubCategoriesController> logger) : ControllerBase
+    public class SubCategoriesController(ISubCategoryService subCategoryService, ILogger logger) : ControllerBase
     {
-        readonly ILogger<SubCategoriesController> logger = logger;
+        readonly ILogger logger = logger;
         readonly ISubCategoryService subCategoryService = subCategoryService;
 
         // GET api/<SubCategoriesController>

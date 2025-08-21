@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MoneyMaster.Database.Entities
+namespace MoneyMaster.Common.Entities
 {
     public class Category : BaseEntity
     {

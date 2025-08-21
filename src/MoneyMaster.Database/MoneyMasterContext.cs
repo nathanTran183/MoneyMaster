@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MoneyMaster.Common.Entities;
 using MoneyMaster.Database.Configurations;
-using MoneyMaster.Database.Entities;
 
 namespace MoneyMaster.Database
 {
-    public class MoneyMasterContext : IdentityDbContext<User>
+    public class MoneyMasterContext : IdentityDbContext<User, IdentityRole, string>
     {
         public MoneyMasterContext(DbContextOptions<MoneyMasterContext> options) : base(options) { }
 
@@ -19,21 +20,65 @@ namespace MoneyMaster.Database
         public DbSet<DebtLoan> DebtLoans { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<RecurringTransaction> RecurringTransactions { get; set; }
+        public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
 
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new FamilyConfiguration());
-            modelBuilder.ApplyConfiguration(new FamilyMemberConfiguration());
-            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new SubCategoryConfiguration());
-            modelBuilder.ApplyConfiguration(new BudgetConfiguration());
-            modelBuilder.ApplyConfiguration(new AssetAccountConfiguration());
-            modelBuilder.ApplyConfiguration(new DebtLoanConfiguration());
-            modelBuilder.ApplyConfiguration(new TransactionConfiguration());
-            modelBuilder.ApplyConfiguration(new RecurringTransactionConfiguration());
+            builder.Entity<User>(entity =>
+            {
+                entity.ToTable(name: "User");
+            });
+
+            builder.Entity<IdentityRole>(entity =>
+            {
+                entity.ToTable(name: "Roles");
+            });
+
+            builder.Entity<IdentityUserRole<string>>(entity =>
+            {
+                entity.ToTable("UserRoles");
+            });
+
+            builder.Entity<IdentityUserClaim<string>>(entity =>
+            {
+                entity.ToTable("UserClaims");
+            });
+
+            builder.Entity<IdentityUserLogin<string>>(entity =>
+            {
+                entity.ToTable("UserLogins");
+            });
+
+            builder.Entity<IdentityRoleClaim<string>>(entity =>
+            {
+                entity.ToTable("RoleClaims");
+            });
+
+            builder.Entity<IdentityUserToken<string>>(entity =>
+            {
+                entity.ToTable("UserTokens");
+            });
+
+            // Configure relationships
+            builder.Entity<User>()
+                .HasMany(u => u.UserRoles)
+                .WithOne()
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new FamilyConfiguration());
+            builder.ApplyConfiguration(new FamilyMemberConfiguration());
+            builder.ApplyConfiguration(new CategoryConfiguration());
+            builder.ApplyConfiguration(new SubCategoryConfiguration());
+            builder.ApplyConfiguration(new BudgetConfiguration());
+            builder.ApplyConfiguration(new AssetAccountConfiguration());
+            builder.ApplyConfiguration(new DebtLoanConfiguration());
+            builder.ApplyConfiguration(new TransactionConfiguration());
+            builder.ApplyConfiguration(new RecurringTransactionConfiguration());
+            builder.ApplyConfiguration(new UserRefreshTokenConfiguration());
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

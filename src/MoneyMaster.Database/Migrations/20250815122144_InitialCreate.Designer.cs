@@ -12,7 +12,7 @@ using MoneyMaster.Database;
 namespace MoneyMaster.Database.Migrations
 {
     [DbContext(typeof(MoneyMasterContext))]
-    [Migration("20250606144911_InitialCreate")]
+    [Migration("20250815122144_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -49,7 +49,7 @@ namespace MoneyMaster.Database.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -74,7 +74,7 @@ namespace MoneyMaster.Database.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("RoleClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -99,7 +99,7 @@ namespace MoneyMaster.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("UserClaims", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -121,7 +121,7 @@ namespace MoneyMaster.Database.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("UserLogins", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -136,7 +136,7 @@ namespace MoneyMaster.Database.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("UserRoles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -155,10 +155,10 @@ namespace MoneyMaster.Database.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.AssetAccount", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.AssetAccount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -201,7 +201,7 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("AssetAccount", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Budget", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Budget", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -242,7 +242,7 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("Budget", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Category", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -280,7 +280,7 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("Category", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.DebtLoan", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.DebtLoan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -324,7 +324,7 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("DebtLoan", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Family", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Family", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -362,7 +362,7 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("Family", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.FamilyMember", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.FamilyMember", b =>
                 {
                     b.Property<int>("FamilyId")
                         .HasColumnType("int");
@@ -391,7 +391,7 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("FamilyMember", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.RecurringTransaction", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.RecurringTransaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -455,7 +455,7 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("RecurringTransaction", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.SubCategory", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.SubCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -502,7 +502,7 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("SubCategory", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Transaction", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -561,7 +561,7 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("Transaction", (string)null);
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.User", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -577,6 +577,9 @@ namespace MoneyMaster.Database.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -584,8 +587,17 @@ namespace MoneyMaster.Database.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FullName")
-                        .IsRequired()
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastLoginAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastName")
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
@@ -635,6 +647,57 @@ namespace MoneyMaster.Database.Migrations
                     b.ToTable("User", (string)null);
                 });
 
+            modelBuilder.Entity("MoneyMaster.Common.Entities.UserRefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Enabled")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<bool>("IsRevoked")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("Token", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserRefreshToken", (string)null);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -646,7 +709,7 @@ namespace MoneyMaster.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", null)
+                    b.HasOne("MoneyMaster.Common.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -655,7 +718,7 @@ namespace MoneyMaster.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", null)
+                    b.HasOne("MoneyMaster.Common.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -670,8 +733,8 @@ namespace MoneyMaster.Database.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", null)
-                        .WithMany()
+                    b.HasOne("MoneyMaster.Common.Entities.User", null)
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -679,16 +742,16 @@ namespace MoneyMaster.Database.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", null)
+                    b.HasOne("MoneyMaster.Common.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.AssetAccount", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.AssetAccount", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                    b.HasOne("MoneyMaster.Common.Entities.User", "User")
                         .WithMany("AssetAccounts")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -697,15 +760,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Budget", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Budget", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.SubCategory", "SubCategory")
+                    b.HasOne("MoneyMaster.Common.Entities.SubCategory", "SubCategory")
                         .WithMany("Budgets")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                    b.HasOne("MoneyMaster.Common.Entities.User", "User")
                         .WithMany("Budgets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -716,9 +779,9 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Category", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Category", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                    b.HasOne("MoneyMaster.Common.Entities.User", "User")
                         .WithMany("Categories")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -727,15 +790,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.DebtLoan", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.DebtLoan", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.AssetAccount", "AssetAccount")
+                    b.HasOne("MoneyMaster.Common.Entities.AssetAccount", "AssetAccount")
                         .WithMany("DebtLoans")
                         .HasForeignKey("AssetAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                    b.HasOne("MoneyMaster.Common.Entities.User", "User")
                         .WithMany("DebtLoans")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -746,9 +809,9 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Family", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Family", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                    b.HasOne("MoneyMaster.Common.Entities.User", "User")
                         .WithMany("Families")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -757,15 +820,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.FamilyMember", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.FamilyMember", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.Family", "Family")
+                    b.HasOne("MoneyMaster.Common.Entities.Family", "Family")
                         .WithMany("FamilyMembers")
                         .HasForeignKey("FamilyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", "Member")
+                    b.HasOne("MoneyMaster.Common.Entities.User", "Member")
                         .WithMany("FamilyMembers")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -776,26 +839,26 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.RecurringTransaction", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.RecurringTransaction", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.AssetAccount", "AssetAccount")
+                    b.HasOne("MoneyMaster.Common.Entities.AssetAccount", "AssetAccount")
                         .WithMany("RecurringTransactions")
                         .HasForeignKey("AssetAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.Family", "Family")
+                    b.HasOne("MoneyMaster.Common.Entities.Family", "Family")
                         .WithMany("RecurringTransactions")
                         .HasForeignKey("FamilyId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("MoneyMaster.Database.Entities.SubCategory", "SubCategory")
+                    b.HasOne("MoneyMaster.Common.Entities.SubCategory", "SubCategory")
                         .WithMany("RecurringTransactions")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                    b.HasOne("MoneyMaster.Common.Entities.User", "User")
                         .WithMany("RecurringTransactions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -810,15 +873,15 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.SubCategory", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.SubCategory", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.Category", "Category")
+                    b.HasOne("MoneyMaster.Common.Entities.Category", "Category")
                         .WithMany("SubCategories")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                    b.HasOne("MoneyMaster.Common.Entities.User", "User")
                         .WithMany("SubCategories")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -829,26 +892,26 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Transaction", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Transaction", b =>
                 {
-                    b.HasOne("MoneyMaster.Database.Entities.AssetAccount", "AssetAccount")
+                    b.HasOne("MoneyMaster.Common.Entities.AssetAccount", "AssetAccount")
                         .WithMany("Transactions")
                         .HasForeignKey("AssetAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.Family", "Family")
+                    b.HasOne("MoneyMaster.Common.Entities.Family", "Family")
                         .WithMany("Transactions")
                         .HasForeignKey("FamilyId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("MoneyMaster.Database.Entities.SubCategory", "SubCategory")
+                    b.HasOne("MoneyMaster.Common.Entities.SubCategory", "SubCategory")
                         .WithMany("Transactions")
                         .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("MoneyMaster.Database.Entities.User", "User")
+                    b.HasOne("MoneyMaster.Common.Entities.User", "User")
                         .WithMany("Transactions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -863,7 +926,18 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.AssetAccount", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.UserRefreshToken", b =>
+                {
+                    b.HasOne("MoneyMaster.Common.Entities.User", "User")
+                        .WithMany("UserRefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MoneyMaster.Common.Entities.AssetAccount", b =>
                 {
                     b.Navigation("DebtLoans");
 
@@ -872,12 +946,12 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Category", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Category", b =>
                 {
                     b.Navigation("SubCategories");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.Family", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.Family", b =>
                 {
                     b.Navigation("FamilyMembers");
 
@@ -886,7 +960,7 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.SubCategory", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.SubCategory", b =>
                 {
                     b.Navigation("Budgets");
 
@@ -895,7 +969,7 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("Transactions");
                 });
 
-            modelBuilder.Entity("MoneyMaster.Database.Entities.User", b =>
+            modelBuilder.Entity("MoneyMaster.Common.Entities.User", b =>
                 {
                     b.Navigation("AssetAccounts");
 
@@ -914,6 +988,10 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("SubCategories");
 
                     b.Navigation("Transactions");
+
+                    b.Navigation("UserRefreshTokens");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }
