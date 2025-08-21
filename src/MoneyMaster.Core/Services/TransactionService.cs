@@ -17,7 +17,7 @@ public class TransactionService : ITransactionService
         this.transactionRepository = transactionRepository;
     }
 
-    public async Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactions()
+    public async Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactionsAsync()
     {
         var result = new ServiceResult<IEnumerable<TransactionDTO>>();
         var transactions = await transactionRepository.GetTransactionsAsync();
@@ -25,7 +25,7 @@ public class TransactionService : ITransactionService
         return result;
     }
 
-    public async Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactionsByAssetAccountId(int assetAccountId)
+    public async Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactionsByAssetAccountIdAsync(int assetAccountId)
     {
         var result = new ServiceResult<IEnumerable<TransactionDTO>>();
         var transactions = await transactionRepository.GetTransactionsByAssetAccountIdAsync(assetAccountId);
@@ -33,7 +33,7 @@ public class TransactionService : ITransactionService
         return result;
     }
 
-    public async Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactionsByFamilyId(int familyId)
+    public async Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactionsByFamilyIdAsync(int familyId)
     {
         var result = new ServiceResult<IEnumerable<TransactionDTO>>();
         var transactions = await transactionRepository.GetTransactionsByFamilyIdAsync(familyId);
@@ -41,12 +41,12 @@ public class TransactionService : ITransactionService
         return result;
     }
 
-    public Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactionsByUserId(string userId)
+    public Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactionsByUserIdAsync(string userId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<ServiceResult<TransactionDTO>> GetTransactionById(int id)
+    public async Task<ServiceResult<TransactionDTO>> GetTransactionByIdAsync(int id)
     {
         var result = new ServiceResult<TransactionDTO>();
         var transactions = await transactionRepository.GetTransactionByIdAsync(id);
@@ -54,7 +54,7 @@ public class TransactionService : ITransactionService
         return result;
     }
 
-    public async Task<ServiceResult> UpdateTransaction(TransactionDTO transactionDTO)
+    public async Task<ServiceResult> UpdateTransactionAsync(TransactionDTO transactionDTO)
     {
         var result = new ServiceResult();
         var transaction = await transactionRepository.GetTransactionByIdAsync(transactionDTO.Id);
@@ -69,7 +69,7 @@ public class TransactionService : ITransactionService
         return result;
     }
 
-    public async Task<ServiceResult<int>> AddTransaction(TransactionDTO transactionDTO)
+    public async Task<ServiceResult<int>> AddTransactionAsync(TransactionDTO transactionDTO)
     {
         var result = new ServiceResult<int>();
         var transaction = mapper.Map<Transaction>(transactionDTO);
@@ -77,7 +77,7 @@ public class TransactionService : ITransactionService
         return result;
     }
 
-    public async Task<ServiceResult> DeleteTransaction(int id)
+    public async Task<ServiceResult> DeleteTransactionAsync(int id)
     {
         var result = new ServiceResult();
         var transaction = await transactionRepository.GetTransactionByIdAsync(id);

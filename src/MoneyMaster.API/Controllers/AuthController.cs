@@ -3,52 +3,52 @@ using Microsoft.AspNetCore.Mvc;
 using MoneyMaster.Common.Models.Responses;
 using MoneyMaster.Service.Interfaces;
 
-namespace MoneyMaster.Api.Controllers
+namespace MoneyMaster.Api.Controllers;
+
+[Route("api/[controller]")]
+[Produces("application/json")]
+[ApiController]
+public class AuthController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+    readonly ILogger logger;
+    readonly IConfiguration configuration;
+    readonly IAuthService authService;
+
+    public AuthController(IConfiguration configuration, IAuthService authService, ILogger<AuthController> logger)
     {
-        readonly ILogger logger;
-        readonly IConfiguration configuration;
-        readonly IAuthService authService;
+        this.configuration = configuration;
+        this.authService = authService;
+        this.logger = logger;
+    }
 
-        public AuthController(IConfiguration configuration, IAuthService authService, ILogger<AuthController> logger)
+    //[HttpPost]
+    //public async Task<IActionResult> LoginAsync(LoginRequest req)
+    //{
+    //}
+
+    [HttpPost("register")]
+    public async Task<ActionResult<ResponseResult<RegisterResponse>>> RegisterAsync(RegisterRequest req)
+    {
+        try
         {
-            this.configuration = configuration;
-            this.authService = authService;
-            this.logger = logger;
-        }
-
-        //[HttpPost]
-        //public async Task<IActionResult> LoginAsync(LoginRequest req)
-        //{
-        //}
-
-        [HttpPost("register")]
-        public async Task<ActionResult<ResponseResult<RegisterResponse>>> RegisterAsync(RegisterRequest req)
-        {
-            try
+            var res = await authService.RegisterUserAsync(req);
+            if (res.Success)
             {
-                var res = await authService.RegisterUserAsync(req);
-                if (res.Success)
-                {
-                    return Ok(ResponseResult<RegisterResponse>.CreateSuccess(res.Value));
-                }
-                return BadRequest(ResponseResult<RegisterResponse>.CreateError(res.Errors, "Failed to register new account"));
+                return Ok(ResponseResult<RegisterResponse>.CreateSuccess(res.Value));
             }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, ex.Message);
-                return StatusCode(500, "An error occurred while adding the Category");
-            }
-            
+            return BadRequest(ResponseResult<RegisterResponse>.CreateError(res.Errors, "Failed to register new account"));
         }
-
-        [HttpGet("ping")]
-        public IActionResult TestConnection()
+        catch (Exception ex)
         {
-            return Ok("Pong");
+            logger.LogError(ex, ex.Message);
+            return StatusCode(500, "An error occurred while adding the Category");
         }
+        
+    }
+
+    [HttpGet("ping")]
+    public IActionResult TestConnection()
+    {
+        return Ok("Pong");
     }
 }
