@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
-using MoneyMaster.Common.Interfaces;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.Data;
+using MoneyMaster.Common;
+using MoneyMaster.Common.Entities;
 using MoneyMaster.Common.Models.Responses;
 using MoneyMaster.Database.Interfaces;
 using MoneyMaster.Service.Interfaces;
@@ -8,17 +10,20 @@ namespace MoneyMaster.Service.Services
 {
     public class AuthService : IAuthService
     {
-        private IUserRepository userRepository;
-        private readonly IPasswordHasher passwordHasher;
+        readonly UserManager<User> userManager;
+        readonly ITokenService tokenService;
+        readonly IUserRepository userRepository;
 
-        public AuthService(IUserRepository userRepository, IPasswordHasher passwordHasher)
+        public AuthService(UserManager<User> userManager, ITokenService tokenService, IUserRepository userRepository)
         {
+            this.userManager = userManager;
+            this.tokenService = tokenService;
             this.userRepository = userRepository;
-            this.passwordHasher = passwordHasher;
         }
 
-        public async Task<LoginResponse> LoginAsync(LoginRequest loginRequest)
+        public async Task<ServiceResult<LoginResponse>> LoginAsync(LoginRequest loginRequest)
         {
+            var result = new ServiceResult<LoginResponse>();
             //var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
             //if (user == null)
             //{
@@ -27,16 +32,45 @@ namespace MoneyMaster.Service.Services
             throw new NotImplementedException();
         }
 
-        public Task<ServiceResult<RegisterResponse>> RegisterAsync(RegisterRequest registerRequest)
+        public async Task<ServiceResult<RegisterResponse>> RegisterUserAsync(RegisterRequest registerRequest)
         {
-            //var result = new ServiceResult() { Success = true };
+            var result = new ServiceResult<RegisterResponse>();
 
-            //var email = userRepository.GetUserByEmailAsync(registerRequest.Email);
-            //if (email != null)
-            //{
-                
-            //}
-            throw new NotImplementedException();
+            var user = await userManager.FindByEmailAsync(registerRequest.Email);
+            if (user != null) 
+            {
+                result.AddErrors($"{registerRequest.Email} is already registered.");
+                return result;
+            }
+
+            user = new User
+            {
+                UserName = registerRequest.Email,
+                Email = registerRequest.Email,
+            };
+            var userRes = await userManager.CreateAsync(user, registerRequest.Password);
+            if (!userRes.Succeeded)
+            {
+                foreach (var error in userRes.Errors)
+                {
+                    result.AddErrors(error.Description);
+                }
+                return result;
+            }
+
+            await userManager.AddToRoleAsync(user, Constants.UserRole);
+            
+            var (token, refreshToken) = await tokenService.GenerateTokenAsync(user.Id, user.Email!, [Constants.UserRole]);
+            var res = new RegisterResponse
+            {
+                Token = token,
+                RefreshToken = refreshToken,
+                UserId = user.Id,
+                ExpiresAt = DateTime.UtcNow + TimeSpan.FromSeconds(3600)
+            };
+
+            result.Value = res;
+            return result;
         }
     }
 }

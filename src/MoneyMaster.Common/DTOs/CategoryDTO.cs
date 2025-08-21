@@ -1,4 +1,4 @@
-﻿using MoneyMaster.Database.Entities;
+﻿using MoneyMaster.Common.Entities;
 using System.Collections.Generic;
 
 namespace MoneyMaster.Common.DTOs

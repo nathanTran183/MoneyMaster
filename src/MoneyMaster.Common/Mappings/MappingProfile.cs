@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MoneyMaster.Common.DTOs;
-using MoneyMaster.Database.Entities;
+using MoneyMaster.Common.Entities;
 
 namespace MoneyMaster.Common.Mappings
 {
