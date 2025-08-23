@@ -6,6 +6,7 @@ using MoneyMaster.Database;
 namespace MoneyMaster.Api.Controllers;
 
 [Route("api/[controller]")]
+[Produces("application/json")]
 [ApiController]
 public class UsersController : ControllerBase
 {

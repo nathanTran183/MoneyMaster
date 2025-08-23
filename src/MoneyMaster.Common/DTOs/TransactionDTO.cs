@@ -1,9 +1,10 @@
 ﻿using MoneyMaster.Common.Enums;
+using MoneyMaster.Common.Entities;
 using System;
 
-namespace MoneyMaster.Common.Entities
+namespace MoneyMaster.Common.DTOs
 {
-    public class Transaction : BaseEntity
+    public class TransactionDTO : BaseDTO
     {
         public float Amount { get; set; }
         public TransactionType TransactionType { get; set; }

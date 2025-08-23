@@ -11,34 +11,38 @@ namespace MoneyMaster.Database.Configurations
             base.Configure(builder);
             builder.ToTable(nameof(Transaction));
 
-            builder.HasOne(aa => aa.User)
-                .WithMany(aa => aa.Transactions)
-                .HasForeignKey(aa => aa.UserId)
+            builder.HasOne(t => t.User)
+                .WithMany(t => t.Transactions)
+                .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-            builder.HasOne(aa => aa.Family)
-                .WithMany(aa => aa.Transactions)
-                .HasForeignKey(aa => aa.FamilyId)
+            builder.HasOne(t => t.Family)
+                .WithMany(t => t.Transactions)
+                .HasForeignKey(t => t.FamilyId)
                 .OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(aa => aa.SubCategory)
-                .WithMany(aa => aa.Transactions)
-                .HasForeignKey(aa => aa.SubCategoryId)
+            builder.HasOne(t => t.SubCategory)
+                .WithMany(t => t.Transactions)
+                .HasForeignKey(t => t.SubCategoryId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
-            builder.HasOne(aa => aa.AssetAccount)
-                .WithMany(aa => aa.Transactions)
-                .HasForeignKey(aa => aa.AssetAccountId)
+            builder.HasOne(t => t.AssetAccount)
+                .WithMany(t => t.Transactions)
+                .HasForeignKey(t => t.AssetAccountId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
+            builder.HasOne(t => t.TransferTransaction)
+                .WithOne(t => t.TransferTransaction)
+                .HasForeignKey<Transaction>(t => t.TransferTransactionId)
+                .OnDelete(DeleteBehavior.SetNull);
 
-            builder.Property(aa => aa.Amount)
+            builder.Property(t => t.Amount)
                 .IsRequired();
-            builder.Property(aa => aa.TransactionType)
+            builder.Property(t => t.TransactionType)
                 .HasConversion<string>()
                 .HasMaxLength(100)
                 .IsRequired();
-            builder.Property(aa => aa.Note);
-            builder.Property(aa => aa.TransactionDate)
+            builder.Property(t => t.Note);
+            builder.Property(t => t.TransactionDate)
                 .IsRequired();
         }
     }

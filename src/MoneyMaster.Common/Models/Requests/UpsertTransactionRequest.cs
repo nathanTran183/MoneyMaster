@@ -1,9 +1,9 @@
 ﻿using MoneyMaster.Common.Enums;
 using System;
 
-namespace MoneyMaster.Common.Entities
+namespace MoneyMaster.Common.Models.Requests
 {
-    public class Transaction : BaseEntity
+    public class UpsertTransactionRequest
     {
         public float Amount { get; set; }
         public TransactionType TransactionType { get; set; }
@@ -13,10 +13,6 @@ namespace MoneyMaster.Common.Entities
         public int? FamilyId { get; set; }
         public int AssetAccountId { get; set; }
         public int? TransferTransactionId { get; set; }
-
-        public virtual SubCategory SubCategory { get; set; }
-        public virtual Family? Family { get; set; }
-        public virtual AssetAccount AssetAccount { get; set; }
-        public virtual Transaction TransferTransaction { get; set; }
+        public string UserId { get; set; }
     }
 }
