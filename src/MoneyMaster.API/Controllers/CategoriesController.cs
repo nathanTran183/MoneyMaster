@@ -29,7 +29,31 @@ public class CategoriesController : ControllerBase
         {
             return Ok(ResponseResult<IEnumerable<CategoryDTO>>.CreateSuccess(result.Value));
         }
-        return NotFound(ResponseResult<IEnumerable<CategoryDTO>>.CreateError(result.Errors, "Failed to retrieve Categories"));
+        return NotFound(ResponseResult<IEnumerable<CategoryDTO>>.CreateError(result.Errors, "Failed to retrieve Categories "));
+    }
+
+    // GET api/<CategoriesController>/3
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ResponseResult<CategoryDTO>>> GetCategoryByIdAsync(int id)
+    {
+        var result = await categoryService.GetCategoryByIdAsync(id);
+        if (result.Success)
+        {
+            return Ok(ResponseResult<CategoryDTO>.CreateSuccess(result.Value));
+        }
+        return NotFound(ResponseResult<CategoryDTO>.CreateError(result.Errors, $"Failed to retrieve Category with Id = {id}"));
+    }
+
+    // GET api/<CategoriesController>/user/2
+    [HttpGet("user/{userId}")]
+    public async Task<ActionResult<ResponseResult<IEnumerable<CategoryDTO>>>> GetCategoriesByUserIdAsync(string userId)
+    {
+        var result = await categoryService.GetCategoriesByUserIdAsync(userId);
+        if (result.Success)
+        {
+            return Ok(ResponseResult<IEnumerable<CategoryDTO>>.CreateSuccess(result.Value));
+        }
+        return NotFound(ResponseResult<IEnumerable<CategoryDTO>>.CreateError(result.Errors, $"Failed to retrieve Categories by User with Id = {userId}"));
     }
 
     // POST api/<CategoriesController>
