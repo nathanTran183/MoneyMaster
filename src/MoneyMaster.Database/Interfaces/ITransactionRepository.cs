@@ -6,6 +6,7 @@ namespace MoneyMaster.Database.Interfaces
     {
         Task<IEnumerable<Transaction>> GetTransactionsAsync();
         Task<IEnumerable<Transaction>> GetTransactionsByAssetAccountIdAsync(int assetAccountId);
+        Task<IEnumerable<Transaction>> GetTransactionsByUserIdAsync(string userId);
         Task<IEnumerable<Transaction>> GetTransactionsByFamilyIdAsync(int familyId);
         Task<Transaction?> GetTransactionByIdAsync(int id);
         Task<int> AddTransactionAsync(Transaction transaction);

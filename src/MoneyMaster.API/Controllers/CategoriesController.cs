@@ -29,7 +29,7 @@ public class CategoriesController : ControllerBase
         {
             return Ok(ResponseResult<IEnumerable<CategoryDTO>>.CreateSuccess(result.Value));
         }
-        return NotFound(ResponseResult<IEnumerable<CategoryDTO>>.CreateError(result.Errors, "Failed to retrieve Categories "));
+        return NotFound(ResponseResult<IEnumerable<CategoryDTO>>.CreateError(result.Errors, "Failed to retrieve Categories"));
     }
 
     // GET api/<CategoriesController>/3

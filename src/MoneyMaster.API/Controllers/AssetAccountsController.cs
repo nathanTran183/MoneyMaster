@@ -20,7 +20,7 @@ public class AssetAccountsController : ControllerBase
     }
 
     // GET api/<AssetAccountsController>
-    [HttpGet()]
+    [HttpGet]
     public async Task<ActionResult<ResponseResult<IEnumerable<AssetAccountDTO>>>> GetAssetAccountsAsync()
     {
         var result = await assetAccountService.GetAssetAccountsAsync();

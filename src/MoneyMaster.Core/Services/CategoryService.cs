@@ -71,11 +71,15 @@ namespace MoneyMaster.Service.Services
             if (category == null)
             {
                 result.AddErrors($"Cannot find Category with Id = {categoryDTO.Id}");
+                return result;
             }
-            else
+            var isDuplicateCategory = await categoryRepository.CategoryNameExistByUserId(categoryDTO.Id, categoryDTO.UserId, categoryDTO.Name);
+            if (isDuplicateCategory)
             {
-                await categoryRepository.UpdateCategoryAsync(mapper.Map<Category>(categoryDTO));
+                result.AddErrors($"The category named {categoryDTO.Name} already existed");
             }
+            
+            await categoryRepository.UpdateCategoryAsync(mapper.Map<Category>(categoryDTO));
             return result;
         }
 
