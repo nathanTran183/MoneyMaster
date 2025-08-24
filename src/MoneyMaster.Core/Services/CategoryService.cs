@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MoneyMaster.Common.DTOs;
+using MoneyMaster.Common.Entities;
 using MoneyMaster.Database.Interfaces;
 using MoneyMaster.Service.Interfaces;
 
@@ -10,8 +11,8 @@ namespace MoneyMaster.Service.Services
         readonly ICategoryRepository categoryRepository;
         readonly IMapper mapper;
 
-        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper) 
-        { 
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
+        {
             this.categoryRepository = categoryRepository;
             this.mapper = mapper;
         }
@@ -24,28 +25,73 @@ namespace MoneyMaster.Service.Services
             return result;
         }
 
-        public Task<ServiceResult<IEnumerable<CategoryDTO>>> GetCategoriesByUserIdAsync(string userId)
+        public async Task<ServiceResult<IEnumerable<CategoryDTO>>> GetCategoriesByUserIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            var categories = await categoryRepository.GetCategoriesByUserIdAsync(userId);
+            var result = new ServiceResult<IEnumerable<CategoryDTO>>();
+            result.Value = mapper.Map<IEnumerable<CategoryDTO>>(categories);
+            return result;
         }
 
-        public Task<ServiceResult<CategoryDTO>> GetCategoryByIdAsync(int id)
+        public async Task<ServiceResult<CategoryDTO>> GetCategoryByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var category = await categoryRepository.GetCategoryByIdAsync(id);
+            var result = new ServiceResult<CategoryDTO>();
+            if (category == null)
+            {
+                result.AddErrors($"Cannot find Category with Id = {id}");
+            }
+            else
+            {
+                result.Value = mapper.Map<CategoryDTO>(category);
+            }
+            return result;
         }
 
-        public Task<ServiceResult<int>> AddCategoryAsync(CategoryDTO categoryDTO)
+        public async Task<ServiceResult<int>> AddCategoryAsync(CategoryDTO categoryDTO)
         {
-            throw new NotImplementedException();
+            var result = new ServiceResult<int>();
+            var isNameExisted = await categoryRepository.CategoryNameExistByUserId(categoryDTO.Id, categoryDTO.UserId, categoryDTO.Name);
+            if (isNameExisted)
+            {
+                result.AddErrors($"The category named {categoryDTO.Name} already existed");
+            }
+            else
+            {
+                var category = mapper.Map<Category>(categoryDTO);
+                result.Value = await categoryRepository.AddCategoryAsync(category);
+            }
+            return result;
         }
 
-        public Task<ServiceResult> UpdateCategoryAsync(CategoryDTO categoryDTO)
+        public async Task<ServiceResult> UpdateCategoryAsync(CategoryDTO categoryDTO)
         {
-            throw new NotImplementedException();
+            var result = new ServiceResult();
+            var category = await categoryRepository.GetCategoryByIdAsync(categoryDTO.Id);
+            if (category == null)
+            {
+                result.AddErrors($"Cannot find Category with Id = {categoryDTO.Id}");
+            }
+            else
+            {
+                await categoryRepository.UpdateCategoryAsync(mapper.Map<Category>(categoryDTO));
+            }
+            return result;
         }
-        public Task<ServiceResult> DeleteCategoryAsync(int id)
+
+        public async Task<ServiceResult> DeleteCategoryAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = new ServiceResult();
+            var category = await categoryRepository.GetCategoryByIdAsync(id);
+            if (category == null)
+            {
+                result.AddErrors($"Cannot find Category with Id = {id}");
+            }
+            else
+            {
+                await categoryRepository.DeleteCategoryAsync(category);
+            }
+            return result;
         }
     }
 }
