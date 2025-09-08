@@ -1,14 +1,13 @@
 ﻿using MoneyMaster.Common.Entities;
 
-namespace MoneyMaster.Database.Interfaces
+namespace MoneyMaster.Database.Interfaces;
+
+public interface IUserRefreshTokenRepository
 {
-    public interface IUserRefreshTokenRepository
-    {
-        Task<IEnumerable<UserRefreshToken>> GetUserRefreshTokensByUserIdAsync(string userId);
-        UserRefreshToken? GetUserRefreshTokenByToken(string token);
-        Task RevokeUserRefreshToken(int id);
-        Task DeleteUserRefreshToken(UserRefreshToken tokenObj);
-        Task<int> AddUserRefreshTokenAsync(UserRefreshToken tokenObj);
-        Task<bool> IsRefreshTokenValidAsync(string token);
-    }
+    Task<IEnumerable<UserRefreshToken>> GetUserRefreshTokensByUserIdAsync(string userId);
+    UserRefreshToken? GetUserRefreshTokenByToken(string token);
+    Task RevokeUserRefreshToken(int id);
+    Task DeleteUserRefreshToken(UserRefreshToken tokenObj);
+    Task<int> AddUserRefreshTokenAsync(UserRefreshToken tokenObj);
+    Task<bool> IsRefreshTokenValidAsync(string token);
 }

@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
 using MoneyMaster.Common.Models.Responses;
 
-namespace MoneyMaster.Service.Interfaces
+namespace MoneyMaster.Service.Interfaces;
+
+public interface IAuthService
 {
-    public interface IAuthService
-    {
-        Task<ServiceResult<LoginResponse>> LoginAsync(LoginRequest loginRequest);
-        Task<ServiceResult<RegisterResponse>> RegisterUserAsync(RegisterRequest registerRequest);
-    }
+    Task<ServiceResult<LoginResponse>> LoginAsync(LoginRequest loginRequest);
+    Task<ServiceResult<RegisterResponse>> RegisterUserAsync(RegisterRequest registerRequest);
 }

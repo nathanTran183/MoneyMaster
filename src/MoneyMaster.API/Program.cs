@@ -38,6 +38,7 @@ builder.Services.AddTransient<IAssetAccountRepository, AssetAccountRepository>()
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
 builder.Services.AddTransient<IUserRefreshTokenRepository, UserRefreshTokenRepository>();
+builder.Services.AddTransient<ITransactionRepository, TransactionRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -70,13 +71,13 @@ builder.Services.AddAuthorization(options =>
 // Identity services
 builder.Services.AddIdentityCore<User>(options =>
 {
-    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@#";
     options.User.RequireUniqueEmail = true;
     options.Password.RequiredLength = 8;
     options.Password.RequireDigit = true;
     options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
-    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireNonAlphanumeric = true;
     options.Password.RequiredUniqueChars = 1;
 })
     .AddRoles<IdentityRole>()

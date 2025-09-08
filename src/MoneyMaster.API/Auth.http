@@ -1,7 +1,7 @@
 # Define variable
 @baseUrl = http://localhost:5181
-@username = admin1@example.com
-@password = Admin123@
+@username = admin3@example.com
+@password = Abc123@@
 
 # @name getToken
 POST {{baseUrl}}/api/auth/login
