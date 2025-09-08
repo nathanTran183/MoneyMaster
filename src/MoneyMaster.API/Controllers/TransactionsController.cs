@@ -21,7 +21,7 @@ public class TransactionsController : ControllerBase
     }
 
     // GET api/<TransactionsController>
-    [HttpGet()]
+    [HttpGet]
     public async Task<ActionResult<ResponseResult<IEnumerable<TransactionDTO>>>> GetTransactionsAsync()
     {
         var result = await transactionService.GetTransactionsAsync();

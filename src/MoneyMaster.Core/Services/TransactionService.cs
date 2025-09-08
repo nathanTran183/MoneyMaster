@@ -41,9 +41,12 @@ public class TransactionService : ITransactionService
         return result;
     }
 
-    public Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactionsByUserIdAsync(string userId)
+    public async Task<ServiceResult<IEnumerable<TransactionDTO>>> GetTransactionsByUserIdAsync(string userId)
     {
-        throw new NotImplementedException();
+        var result = new ServiceResult<IEnumerable<TransactionDTO>>();
+        var transactions = await transactionRepository.GetTransactionsByUserIdAsync(userId);
+        result.Value = mapper.Map<IEnumerable<TransactionDTO>>(transactions);
+        return result;
     }
 
     public async Task<ServiceResult<TransactionDTO>> GetTransactionByIdAsync(int id)

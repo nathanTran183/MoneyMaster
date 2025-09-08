@@ -60,12 +60,12 @@ public class SubCategoriesController(ISubCategoryService subCategoryService, ILo
             {
                 return Ok(ResponseResult<SubCategoryDTO>.CreateSuccess(subCategory));
             }
-            return BadRequest(ResponseResult<SubCategoryDTO>.CreateError(result.Errors, "Failed to add new SubCategory"));
+            return BadRequest(ResponseResult<SubCategoryDTO>.CreateError(result.Errors, "Failed to update SubCategory"));
         }
         catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);
-            return StatusCode(500, "An error occurred while updating the SubCategory");
+            return StatusCode(500, "An error occurred while updating SubCategory");
         }
     }
 
@@ -85,7 +85,7 @@ public class SubCategoriesController(ISubCategoryService subCategoryService, ILo
         catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);
-            return StatusCode(500, "An error occurred while deleting the SubCategory");
+            return StatusCode(500, "An error occurred while deleting SubCategory");
         }
     }
 }

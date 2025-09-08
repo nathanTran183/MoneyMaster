@@ -20,7 +20,7 @@ public class BudgetsController : ControllerBase
     }
 
     // GET api/<BudgetsController>
-    [HttpGet()]
+    [HttpGet]
     public async Task<ActionResult<ResponseResult<IEnumerable<BudgetDTO>>>> GetBudgetsAsync()
     {
         var result = await budgetService.GetBudgetsAsync();

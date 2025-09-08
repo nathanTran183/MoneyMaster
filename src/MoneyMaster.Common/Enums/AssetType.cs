@@ -1,8 +1,7 @@
-﻿namespace MoneyMaster.Common.Enums
+﻿namespace MoneyMaster.Common.Enums;
+
+public enum AssetType
 {
-    public enum AssetType
-    {
-        Cash = 1,
-        Credit = 2
-    }
+    Cash = 1,
+    Credit = 2
 }

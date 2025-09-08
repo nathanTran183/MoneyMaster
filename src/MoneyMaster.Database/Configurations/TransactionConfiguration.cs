@@ -12,28 +12,28 @@ namespace MoneyMaster.Database.Configurations
             builder.ToTable(nameof(Transaction));
 
             builder.HasOne(t => t.User)
-                .WithMany(t => t.Transactions)
+                .WithMany(u => u.Transactions)
                 .HasForeignKey(t => t.UserId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
             builder.HasOne(t => t.Family)
-                .WithMany(t => t.Transactions)
+                .WithMany(f => f.Transactions)
                 .HasForeignKey(t => t.FamilyId)
                 .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(t => t.SubCategory)
-                .WithMany(t => t.Transactions)
+                .WithMany(sc => sc.Transactions)
                 .HasForeignKey(t => t.SubCategoryId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
             builder.HasOne(t => t.AssetAccount)
-                .WithMany(t => t.Transactions)
+                .WithMany(aa => aa.Transactions)
                 .HasForeignKey(t => t.AssetAccountId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
             builder.HasOne(t => t.TransferTransaction)
-                .WithOne(t => t.TransferTransaction)
+                .WithOne()
                 .HasForeignKey<Transaction>(t => t.TransferTransactionId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.Property(t => t.Amount)
                 .IsRequired();

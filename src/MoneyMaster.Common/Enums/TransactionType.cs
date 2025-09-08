@@ -1,8 +1,7 @@
-﻿namespace MoneyMaster.Common.Enums
+﻿namespace MoneyMaster.Common.Enums;
+
+public enum TransactionType
 {
-    public enum TransactionType
-    {
-        Inflow = 1,
-        Outflow = 2
-    }
+    Inflow = 1,
+    Outflow = 2
 }

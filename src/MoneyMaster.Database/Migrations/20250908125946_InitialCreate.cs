@@ -427,13 +427,14 @@ namespace MoneyMaster.Database.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Amount = table.Column<float>(type: "real", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TransactionType = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SubCategoryId = table.Column<int>(type: "int", nullable: false),
                     FamilyId = table.Column<int>(type: "int", nullable: true),
                     AssetAccountId = table.Column<int>(type: "int", nullable: false),
+                    TransferTransactionId = table.Column<int>(type: "int", nullable: true),
                     Enabled = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -458,6 +459,11 @@ namespace MoneyMaster.Database.Migrations
                         name: "FK_Transaction_SubCategory_SubCategoryId",
                         column: x => x.SubCategoryId,
                         principalTable: "SubCategory",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Transaction_Transaction_TransferTransactionId",
+                        column: x => x.TransferTransactionId,
+                        principalTable: "Transaction",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Transaction_User_UserId",
@@ -592,6 +598,13 @@ namespace MoneyMaster.Database.Migrations
                 name: "IX_Transaction_SubCategoryId",
                 table: "Transaction",
                 column: "SubCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Transaction_TransferTransactionId",
+                table: "Transaction",
+                column: "TransferTransactionId",
+                unique: true,
+                filter: "[TransferTransactionId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Transaction_UserId",

@@ -2,13 +2,12 @@
 using MoneyMaster.Common.DTOs;
 using MoneyMaster.Common.Entities;
 
-namespace MoneyMaster.Common.Mappings
+namespace MoneyMaster.Common.Mappings;
+
+public class MappingProfile : Profile
 {
-    public class MappingProfile : Profile
-    {
-        public MappingProfile() 
-        { 
-            CreateMap<AssetAccount, AssetAccountDTO>();
-        }
+    public MappingProfile() 
+    { 
+        CreateMap<AssetAccount, AssetAccountDTO>();
     }
 }

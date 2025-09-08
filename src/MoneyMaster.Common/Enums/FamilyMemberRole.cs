@@ -1,8 +1,7 @@
-﻿namespace MoneyMaster.Common.Enums
+﻿namespace MoneyMaster.Common.Enums;
+
+public enum FamilyMemberRole
 {
-    public enum FamilyMemberRole
-    {
-        Administrator = 1,
-        Viewer = 2
-    }
+    Administrator = 1,
+    Viewer = 2
 }

@@ -12,7 +12,7 @@ using MoneyMaster.Database;
 namespace MoneyMaster.Database.Migrations
 {
     [DbContext(typeof(MoneyMasterContext))]
-    [Migration("20250815122144_InitialCreate")]
+    [Migration("20250908125946_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -510,8 +510,8 @@ namespace MoneyMaster.Database.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("AssetAccountId")
                         .HasColumnType("int");
@@ -541,6 +541,9 @@ namespace MoneyMaster.Database.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int?>("TransferTransactionId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -555,6 +558,10 @@ namespace MoneyMaster.Database.Migrations
                     b.HasIndex("FamilyId");
 
                     b.HasIndex("SubCategoryId");
+
+                    b.HasIndex("TransferTransactionId")
+                        .IsUnique()
+                        .HasFilter("[TransferTransactionId] IS NOT NULL");
 
                     b.HasIndex("UserId");
 
@@ -911,6 +918,11 @@ namespace MoneyMaster.Database.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("MoneyMaster.Common.Entities.Transaction", "TransferTransaction")
+                        .WithOne()
+                        .HasForeignKey("MoneyMaster.Common.Entities.Transaction", "TransferTransactionId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("MoneyMaster.Common.Entities.User", "User")
                         .WithMany("Transactions")
                         .HasForeignKey("UserId")
@@ -922,6 +934,8 @@ namespace MoneyMaster.Database.Migrations
                     b.Navigation("Family");
 
                     b.Navigation("SubCategory");
+
+                    b.Navigation("TransferTransaction");
 
                     b.Navigation("User");
                 });
